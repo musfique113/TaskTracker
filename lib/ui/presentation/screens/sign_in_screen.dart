@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/email_verification_screen.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/sign_up_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -87,7 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Don't have an account?",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,letterSpacing: 0.3),),
-                    TextButton(onPressed: () {}, child: const Text("Sign Up"))
+                    TextButton(onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpScreen()));
+                    }, child: const Text("Sign Up"))
                   ],
                 )
               ],
