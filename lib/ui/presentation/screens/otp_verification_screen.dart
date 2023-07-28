@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/login_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
@@ -38,11 +40,45 @@ class OtpVerificationScreen extends StatelessWidget {
                 SizedBox(
                   height: 6,
                 ),
-                const TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: "Email",
+                PinCodeTextField(
+                  keyboardType: TextInputType.number,
+                  length: 6,
+                  obscureText: false,
+                  animationType: AnimationType.fade,
+                  pinTheme: PinTheme(
+                    shape: PinCodeFieldShape.box,
+                    borderRadius: BorderRadius.circular(5),
+                    fieldHeight: 50,
+                    fieldWidth: 40,
+                    inactiveFillColor: Colors.white,
+                    activeFillColor: Colors.white,
+                    inactiveColor: Colors.red,
+                    activeColor: Colors.white,
+                    selectedFillColor: Colors.white,
+                    selectedColor: Colors.green,
                   ),
+                  animationDuration: Duration(milliseconds: 300),
+                  backgroundColor: Colors.white,
+                  cursorColor: Colors.green,
+                  enableActiveFill: true,
+                  //errorAnimationController: errorController,
+                  //controller: textEditingController,
+                  onCompleted: (v) {
+                    print("Completed");
+                  },
+                  onChanged: (value) {
+                    print(value);
+                    // setState(() {
+                    //   currentText = value;
+                    // });
+                  },
+                  // beforeTextPaste: (text) {
+                  //   print("Allowing to paste $text");
+                  //   //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                  //   //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                  //   return true;
+                  // },
+                  appContext: context,
                 ),
                 SizedBox(
                   height: 15,
@@ -65,7 +101,7 @@ class OtpVerificationScreen extends StatelessWidget {
                           letterSpacing: 0.3),
                     ),
                     TextButton(onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginScreen()), (route) => false);
                     }, child: const Text("Sign In"))
                   ],
                 )
