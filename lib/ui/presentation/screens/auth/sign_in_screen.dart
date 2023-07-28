@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/email_verification_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/sign_up_screen.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_up_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 
-import 'bottom_nav_bar_screen.dart';
+import '../bottom_nav_bar_screen.dart';
+
+
 
 class LoginScreen extends StatefulWidget {
 

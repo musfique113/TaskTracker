@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/otp_verification_screen.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/auth/otp_verification_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 
 class ResetPasswordScreen extends StatelessWidget {

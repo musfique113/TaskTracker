@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/sign_in_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/rest_password_screen.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/auth/rest_password_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 
 class OtpVerificationScreen extends StatelessWidget {

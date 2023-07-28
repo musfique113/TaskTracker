@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/sign_in_screen.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 
 class SignUpScreen extends StatefulWidget {
