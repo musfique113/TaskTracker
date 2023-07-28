@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/email_verification_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/sign_in_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 
 class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
   // LoginScreen({super.key});
 
   @override

@@ -3,6 +3,8 @@ import 'package:taskmanager_ostad/ui/presentation/screens/email_verification_scr
 import 'package:taskmanager_ostad/ui/presentation/screens/sign_up_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 
+import 'bottom_nav_bar_screen.dart';
+
 class LoginScreen extends StatefulWidget {
 
   // LoginScreen({super.key});
@@ -68,7 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> const BottomNavbarScreen()), (route) => false);
+                      },
                       child: const Icon(Icons.arrow_forward_ios)),
                 ),
                 const SizedBox(
