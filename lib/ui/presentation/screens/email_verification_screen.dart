@@ -39,6 +39,7 @@ class EmailVerificationScreen extends StatelessWidget {
                   height: 6,
                 ),
                 const TextField(
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: "Email",
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/email_verification_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -35,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 30,
                 ),
                 const TextField(
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: "Email",
                   ),
@@ -43,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 15,
                 ),
             TextField(
+              keyboardType: TextInputType.visiblePassword,
               obscureText: !_passwordVisible,
               decoration: InputDecoration(
                 hintText: "Password",
@@ -72,7 +75,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Center(
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> EmailVerificationScreen()));
+                      },
                       child: const Text(
                         "Forgot Password",
                         style: TextStyle(color: Colors.grey),
