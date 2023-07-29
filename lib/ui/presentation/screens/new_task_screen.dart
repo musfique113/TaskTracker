@@ -37,6 +37,26 @@ class NewTaskScreen extends StatelessWidget {
                       number: 123,
                   ),
                 ),
+                Expanded(child: ListView.builder(
+                    itemCount: 20,
+                    itemBuilder: (context,index){
+                      return ListTile(
+                        title: Text("Title"),
+                        subtitle:Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Sub title"),
+                            Text("Date"),
+                            Row(
+                              children: [
+                                Chip(label: Text("New"),backgroundColor: Colors.blue,)
+                              ],
+                            )
+                          ],
+                        ) ,
+                      );
+                    },),
+                ),
               ],
             ),
           ],
