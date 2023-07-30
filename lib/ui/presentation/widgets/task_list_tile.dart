@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class TaskListTile extends StatelessWidget {
   const TaskListTile({
     super.key,
@@ -7,50 +8,38 @@ class TaskListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-        itemCount: 20,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: const Text('Title will be here'),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Title will be here'),
-                const Text('Date'),
-                Row(
-                  children: [
-                    const Chip(
-                      label: Text(
-                        'New',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      backgroundColor: Colors.blue,
-                    ),
-                    const Spacer(),
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.delete_forever_outlined,
-                          color: Colors.red.shade300,
-                        )),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.green,
-                        )),
-                  ],
-                )
-              ],
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return Divider(
-            height: 4,
-          );
-        },
+    return ListTile(
+      title: const Text('Title will be here'),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Title will be here'),
+          const Text('Date'),
+          Row(
+            children: [
+              const Chip(
+                label: Text(
+                  'New',
+                  style: TextStyle(color: Colors.white),
+                ),
+                backgroundColor: Colors.blue,
+              ),
+              const Spacer(),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.delete_forever_outlined,
+                    color: Colors.red.shade300,
+                  )),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.edit,
+                    color: Colors.green,
+                  )),
+            ],
+          )
+        ],
       ),
     );
   }
