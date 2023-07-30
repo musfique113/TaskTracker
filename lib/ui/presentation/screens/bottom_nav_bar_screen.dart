@@ -44,8 +44,8 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.list_alt),label: "New"),
           BottomNavigationBarItem(icon: Icon(Icons.access_time_rounded),label: "In Progress"),
-          BottomNavigationBarItem(icon: Icon(Icons.check_circle_outlined), label: "Cancle"),
-          BottomNavigationBarItem(icon: Icon(Icons.cancel_outlined),label: "Completed"),
+          BottomNavigationBarItem(icon: Icon(Icons.cancel_outlined), label: "Cancle"),
+          BottomNavigationBarItem(icon: Icon(Icons.check_circle_outlined),label: "Completed"),
         ],
       ),
     );
