@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
@@ -32,14 +33,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
       });
     }
 
-    final response = await NetworkCaller().postRequest(Urls.registration, <String, dynamic>{
+    Map<String, dynamic> requestBody = {
       "email": _emailTEController.text.trim(),
       "firstName": _firstNameTEController.text.trim(),
       "lastName": _lastNameTEController.text.trim(),
       "mobile": _mobileTEController.text.trim(),
       "password": _passwordTEController.text,
-      "photo": "",
-    });
+      "photo": ""
+    };
+
+    final NetworkResponse response = await NetworkCaller().postRequest(Urls.registration, requestBody);
     _signUpInProgress =false;
     if (mounted){
       setState(() {
