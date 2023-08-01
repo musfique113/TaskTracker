@@ -1,23 +1,23 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:taskmanager_ostad/data/models/response_object.dart';
 
 class NetworkCaller {
-  Future<Map<String, dynamic>?> getRequest(String url) async {
-    Map<String, dynamic>? decodedResponse;
-
+  Future<NetworkResponse> getRequest(String url) async {
     try {
       Response response = await get(Uri.parse(url));
       if (response.statusCode == 200) {
-        decodedResponse = jsonDecode(response.body);
+        return NetworkResponse(true,response.statusCode, jsonDecode(response.body));
       } else {
+        return NetworkResponse(false,response.statusCode, null);
 
       }
     } catch (e) {
       log(e.toString());
     }
-    return decodedResponse;
+    return NetworkResponse(false,-1, null);
   }
+
+
 }
