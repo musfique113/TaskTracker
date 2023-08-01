@@ -13,6 +13,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   bool _passwordVisible = false;
+  bool _signUpInProgress = false;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _firstNameTEController = TextEditingController();
@@ -20,7 +22,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _mobileTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
 
-  //final TextEditingController _emailTEController = TextEditingController();
+  //final TextEditingController _emailTEController = TextEditingController();+
+
+  Future<void> _userSignUp() async {
+    _signUpInProgress = true;
+    if (mounted){
+      setState(() {
+
+      });
+    }
+
+    final response = await NetworkCaller().postRequest(Urls.registration, <String, dynamic>{
+      "email": _emailTEController.text.trim(),
+      "firstName": _firstNameTEController.text.trim(),
+      "lastName": _lastNameTEController.text.trim(),
+      "mobile": _mobileTEController.text.trim(),
+      "password": _passwordTEController.text,
+      "photo": "",
+    });
+    _signUpInProgress =false;
+    if (mounted){
+      setState(() {
+
+      });
+    }
+    if (response.isSuccess) {
+      _emailTEController.clear();
+      _firstNameTEController.clear();
+      _lastNameTEController.clear();
+      _mobileTEController.clear();
+      _passwordTEController.clear();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Registration successful!'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please correct the errors in the form.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,14 +213,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          if (!_formKey.currentState!.validate()) {
-                            return;
-                          }
-                          _userSignUp();
-                        },
-                        child: const Icon(Icons.arrow_forward_ios)),
+                    child: Visibility(
+                      visible: _signUpInProgress == false,
+                      replacement: const Center(child: CircularProgressIndicator()),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            if (!_formKey.currentState!.validate()) {
+                              return;
+                            }
+                            _userSignUp();
+                          },
+                          child: const Icon(Icons.arrow_forward_ios)),
+                    ),
                   ),
                   const SizedBox(
                     height: 25,
@@ -206,31 +258,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Future<void> _userSignUp() async {
-    final response = await NetworkCaller().postRequest(Urls.registration, <String, dynamic>{
-      "email": _emailTEController.text.trim(),
-      "firstName": _firstNameTEController.text.trim(),
-      "lastName": _lastNameTEController.text.trim(),
-      "mobile": _mobileTEController.text.trim(),
-      "password": _passwordTEController.text,
-      "photo": "",
-    });
-    if (response.isSuccess) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Registration successful!'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please correct the errors in the form.'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
-    }
-  }
+
 }
