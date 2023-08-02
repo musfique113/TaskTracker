@@ -3,12 +3,12 @@ import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/models/summary_count_model.dart';
 import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
+import 'package:taskmanager_ostad/data/utils/urls.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/add_new_task_screen.dart';
+import 'package:taskmanager_ostad/ui/presentation/widgets/summary_card.dart';
+import 'package:taskmanager_ostad/ui/presentation/widgets/task_list_tile.dart';
+import 'package:taskmanager_ostad/ui/presentation/widgets/user_profile_banner.dart';
 
-import '../../../data/utils/urls.dart';
-import '../widgets/summary_card.dart';
-import '../widgets/task_list_tile.dart';
-import '../widgets/user_profile_banner.dart';
 
 class NewTaskScreen extends StatefulWidget {
   const NewTaskScreen({Key? key}) : super(key: key);
@@ -18,25 +18,21 @@ class NewTaskScreen extends StatefulWidget {
 }
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
-  bool _getCountSummaryInProgress = false;
-  bool _getNewTaskInProgress = false;
-
+  bool _getCountSummaryInProgress = false, _getNewTaskInProgress = false;
   SummaryCountModel _summaryCountModel = SummaryCountModel();
   TaskListModel _taskListModel = TaskListModel();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    //after widget binding it get called
+    // after widget binding
     WidgetsBinding.instance.addPostFrameCallback((_) {
-    getSummary();
-    getNewTask();
+      getCountSummary();
+      getNewTasks();
     });
   }
 
-
-  Future<void> getSummary() async {
+  Future<void> getCountSummary() async {
     _getCountSummaryInProgress = true;
     if (mounted) {
       setState(() {});
@@ -48,7 +44,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Fetching summary data failed")));
+            const SnackBar(content: Text('get new task data failed')));
       }
     }
     _getCountSummaryInProgress = false;
@@ -57,21 +53,19 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     }
   }
 
-
-
-  Future<void> getNewTask() async{
+  Future<void> getNewTasks() async {
     _getNewTaskInProgress = true;
     if (mounted) {
       setState(() {});
     }
     final NetworkResponse response =
-    await NetworkCaller().getRequest(Urls.newTasks);
+        await NetworkCaller().getRequest(Urls.newTasks);
     if (response.isSuccess) {
       _taskListModel = TaskListModel.fromJson(response.body!);
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Fetching new task data failed")));
+            const SnackBar(content: Text('Summary data get failed')));
       }
     }
     _getNewTaskInProgress = false;
@@ -80,75 +74,71 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            UserProfileBanner(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _getCountSummaryInProgress
-                  ? const LinearProgressIndicator()
-                  : const Row(
-                      children: [
-                        Expanded(
-                          child: SummaryCard(
-                            title: "Canceled",
-                            number: 123,
-                          ),
-                        ),
-                        Expanded(
-                          child: SummaryCard(
-                            title: "Completed",
-                            number: 124,
-                          ),
-                        ),
-                        Expanded(
-                          child: SummaryCard(
-                            title: "Progress",
-                            number: 125,
-                          ),
-                        ),
-                        Expanded(
-                          child: SummaryCard(
-                            title: "New Task",
-                            number: 126,
-                          ),
-                        ),
-                      ],
+            const UserProfileBanner(),
+            _getCountSummaryInProgress
+                ? const LinearProgressIndicator()
+                : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                      height: 80,
+                      width: double.infinity,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _summaryCountModel.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return SummaryCard(
+                            title: _summaryCountModel.data![index].sId ?? 'New',
+                            number: _summaryCountModel.data![index].sum ?? 0,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const Divider(
+                            height: 4,
+                          );
+                        },
+                      ),
                     ),
-            ),
+                ),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
-                  getNewTask();
+                  getNewTasks();
                 },
-                child: ListView.separated(
-                  itemCount: _taskListModel.data?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    return  TaskListTile(
-                        data: _taskListModel.data![index]
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const Divider(
-                      height: 4,
-                    );
-                  },
-                ),
+                child: _getNewTaskInProgress
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.separated(
+                        itemCount: _taskListModel.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return TaskListTile(
+                            data: _taskListModel.data![index],
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const Divider(
+                            height: 4,
+                          );
+                        },
+                      ),
               ),
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddNewTaskScreen()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const AddNewTaskScreen()));
         },
       ),
     );
