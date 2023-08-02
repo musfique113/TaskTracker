@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 
 
 class TaskListTile extends StatelessWidget {
   const TaskListTile({
-    super.key,
+    super.key, required this.data,
   });
+
+  final TaskData data;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text('Title will be here'),
+      title:  Text(data.title ?? "Unknown"),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Title will be here'),
-          const Text('Date'),
+          Text(data.description ?? "Unknown"),
+           Text(data.createdDate ?? "Unknown"),
           Row(
             children: [
               const Chip(
