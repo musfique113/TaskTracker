@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taskmanager_ostad/data/models/auth_utility.dart';
+import 'package:taskmanager_ostad/data/models/login_model.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/email_verification_screen.dart';
@@ -24,33 +26,42 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _signInProgress = false;
 
   Future<void> logIn() async {
+
     _signInProgress = true;
     setState(() {});
+
     Map<String, dynamic> requestBody = {
       "email": _emailTEController.text.trim(),
       "password": _passwordTEController.text,
     };
+
     final NetworkResponse response =
         await NetworkCaller().postRequest(Urls.login, requestBody);
     _signInProgress = false;
-    setState(() {});
+    if(mounted){
+      setState(() {
+
+      });
+    }
+
     if (response.isSuccess) {
-      _emailTEController.clear();
-      _passwordTEController.clear();
+      LoginModel model = LoginModel.fromJson(response.body!);
+      await AuthUtility.saveUserInfo(model);
       if (mounted) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const BottomNavbarScreen()),
-            (route) => false);
-      } else {
+            MaterialPageRoute(
+                builder: (context) => const BottomNavbarScreen()),
+                (route) => false);
+      }
+    } else {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please correct the errors in the form.'),
-            duration: Duration(seconds: 2),
-          ),
-        );
+            const SnackBar(content: Text('Incorrect email or password')));
       }
     }
+
+
   }
 
   @override

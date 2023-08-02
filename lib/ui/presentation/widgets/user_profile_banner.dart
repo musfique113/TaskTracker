@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:taskmanager_ostad/data/models/auth_utility.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/edit_profile_screen.dart';
 
 class UserProfileBanner extends StatelessWidget {
@@ -20,15 +21,18 @@ class UserProfileBanner extends StatelessWidget {
         tileColor: Colors.green,
         leading: CircleAvatar(
           backgroundImage: NetworkImage(
-              "https://avatars.githubusercontent.com/u/53111065?v=4"),
+            AuthUtility.userInfo.data?.photo ?? ''),
+          onBackgroundImageError: (_, __){
+            const Icon(Icons.image);
+          },
           radius: 15,
         ),
         title: Text(
-          "User Name",
+          '${AuthUtility.userInfo.data?.firstName ?? ''} ${AuthUtility.userInfo.data?.lastName ?? ''}',
           style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
         ),
         subtitle: Text(
-          "User Email",
+          AuthUtility.userInfo.data?.email ?? '',
           style: TextStyle(
             fontWeight: FontWeight.w600,
             color: Colors.white,
