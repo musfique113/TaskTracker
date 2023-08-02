@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart';
+import 'package:taskmanager_ostad/data/models/auth_utility.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 
 class NetworkCaller {
@@ -23,7 +24,7 @@ class NetworkCaller {
       String url, Map<String, dynamic> body) async {
     try {
       Response response = await post(Uri.parse(url),
-          headers: {'Content-type': 'application/json'},
+          headers: {'Content-type': 'application/json', 'token' : AuthUtility.userInfo.token.toString() },
           body: jsonEncode(body));
       log(response.statusCode.toString());
       log(response.body);

@@ -1,13 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:taskmanager_ostad/data/models/auth_utility.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/edit_profile_screen.dart';
 
-class UserProfileBanner extends StatelessWidget {
+class UserProfileBanner extends StatefulWidget {
   const UserProfileBanner({
     super.key,
   });
 
+  @override
+  State<UserProfileBanner> createState() => _UserProfileBannerState();
+}
+
+class _UserProfileBannerState extends State<UserProfileBanner> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -20,9 +25,8 @@ class UserProfileBanner extends StatelessWidget {
       child: ListTile(
         tileColor: Colors.green,
         leading: CircleAvatar(
-          backgroundImage: NetworkImage(
-            AuthUtility.userInfo.data?.photo ?? ''),
-          onBackgroundImageError: (_, __){
+          backgroundImage: NetworkImage(AuthUtility.userInfo.data?.photo ?? ''),
+          onBackgroundImageError: (_, __) {
             const Icon(Icons.image);
           },
           radius: 15,
@@ -38,6 +42,18 @@ class UserProfileBanner extends StatelessWidget {
             color: Colors.white,
             fontSize: 12,
           ),
+        ),
+        trailing: IconButton(
+          onPressed: () async {
+            await AuthUtility.clearUserInfo();
+            if (mounted) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  (route) => false);
+            }
+          },
+          icon: const Icon(Icons.logout_rounded),
         ),
       ),
     );
