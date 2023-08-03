@@ -78,38 +78,41 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            const UserProfileBanner(),
-            _getCountSummaryInProgress
-                ? const LinearProgressIndicator()
-                : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                      height: 80,
-                      width: double.infinity,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _summaryCountModel.data?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          return SummaryCard(
-                            title: _summaryCountModel.data![index].sId ?? 'New',
-                            number: _summaryCountModel.data![index].sum ?? 0,
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const Divider(
-                            height: 4,
-                          );
-                        },
+        child: RefreshIndicator(
+          onRefresh: () async {
+            getNewTasks();
+            getCountSummary();
+          },
+
+          child: Column(
+            children: [
+              const UserProfileBanner(),
+              _getCountSummaryInProgress
+                  ? const LinearProgressIndicator()
+                  : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                        height: 80,
+                        width: double.infinity,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _summaryCountModel.data?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            return SummaryCard(
+                              title: _summaryCountModel.data![index].sId ?? 'New',
+                              number: _summaryCountModel.data![index].sum ?? 0,
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const Divider(
+                              height: 4,
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                ),
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () async {
-                  getNewTasks();
-                },
+                  ),
+
+              Expanded(
                 child: _getNewTaskInProgress
                     ? const Center(
                         child: CircularProgressIndicator(),
@@ -128,8 +131,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                         },
                       ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
