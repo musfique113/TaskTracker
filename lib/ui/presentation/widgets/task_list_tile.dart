@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 
-class TaskListTile extends StatelessWidget {
+class TaskListTile extends StatefulWidget {
   const TaskListTile({
     super.key, required this.data,
   });
@@ -9,26 +9,33 @@ class TaskListTile extends StatelessWidget {
   final TaskData data;
 
   @override
+  State<TaskListTile> createState() => _TaskListTileState();
+}
+
+class _TaskListTileState extends State<TaskListTile> {
+  @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(data.title ?? 'Unknown'),
+      title: Text(widget.data.title ?? 'Unknown'),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(data.description ?? ''),
-          Text(data.createdDate ?? ''),
+          Text(widget.data.description ?? ''),
+          Text(widget.data.createdDate ?? ''),
           Row(
             children: [
               Chip(
                 label: Text(
-                  data.status ?? 'New',
+                  widget.data.status ?? 'New',
                   style: const TextStyle(color: Colors.white),
                 ),
                 backgroundColor: Colors.blue,
               ),
               const Spacer(),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+
+                  },
                   icon: Icon(
                     Icons.delete_forever_outlined,
                     color: Colors.red.shade300,
