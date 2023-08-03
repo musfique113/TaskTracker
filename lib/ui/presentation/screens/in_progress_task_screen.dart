@@ -26,7 +26,8 @@ class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
     final NetworkResponse response =
         await NetworkCaller().getRequest(Urls.inProgressTasks);
     if (response.isSuccess) {
-      _taskListModel = TaskListModel.fromJson(response.body!);
+      TaskListModel allTasks = TaskListModel.fromJson(response.body!);
+      _taskListModel.data = allTasks.data?.where((task) => task.status == 'Progress').toList();
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
