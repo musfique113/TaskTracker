@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/bottom_nav_bar_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/user_profile_banner.dart';
 
 
@@ -99,6 +100,12 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                       child: ElevatedButton(
                           onPressed: () {
                             addNewTask();
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const BottomNavbarScreen()),
+                                    (route) => false);
+                            //Navigator.pushReplacementNamed(context, NewTaskScreen());
                           },
                           child: const Icon(Icons.arrow_forward_ios)),
                     ),
