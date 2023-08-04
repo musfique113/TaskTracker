@@ -100,6 +100,13 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                       child: ElevatedButton(
                           onPressed: () {
                             addNewTask();
+                            if(mounted){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Task added successfully')));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Task added failed')));
+                            }
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(

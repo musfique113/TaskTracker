@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class SummaryCard extends StatelessWidget {
   const SummaryCard({
-    super.key, required this.number, required this.title,
-  });
+    Key? key,
+    required this.number,
+    required this.title,
+  }) : super(key: key);
 
   final int number;
   final String title;
@@ -13,17 +15,33 @@ class SummaryCard extends StatelessWidget {
     return SizedBox(
       width: 100,
       child: Card(
-        elevation: 4,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Text('$number', style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600
-              ),),
-              Text(title),
-            ],
+          padding: const EdgeInsets.all(6),
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Text(
+                    '${number < 10 ? '0$number' : number}',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                ),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
