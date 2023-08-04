@@ -46,3 +46,55 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
     );
   }
 }
+
+
+
+/*
+class BottomNavbarScreen extends StatefulWidget {
+  const BottomNavbarScreen({Key? key}) : super(key: key);
+
+  @override
+  State<BottomNavbarScreen> createState() => _BottomNavbarScreenState();
+}
+
+class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
+  int _selectedScreenIndex = 0;
+  final List<Widget> _screens = const [
+    NewTaskScreen(),
+    InProgressTaskScreen(),
+    CanceledTaskScreen(),
+    CompletedTaskScreen()
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    print(_selectedScreenIndex);
+    return Scaffold(
+      body: _screens[_selectedScreenIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedScreenIndex,
+        unselectedItemColor: Colors.grey,
+        unselectedLabelStyle: const TextStyle(
+            color: Colors.grey
+        ),
+        showUnselectedLabels: true,
+        selectedItemColor: Colors.green,
+        onTap: (int index) {
+          _selectedScreenIndex = index;
+          print(_selectedScreenIndex);
+          if (mounted) {
+            setState(() {});
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: 'New'),
+          BottomNavigationBarItem(icon: Icon(Icons.access_time_rounded), label: 'In Progress'),
+          BottomNavigationBarItem(icon: Icon(Icons.cancel_outlined), label: 'Cancel'),
+          BottomNavigationBarItem(icon: Icon(Icons.check_circle_outline), label: 'Completed'),
+        ],
+      ),
+    );
+  }
+}
+*/
