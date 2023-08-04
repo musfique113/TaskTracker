@@ -3,6 +3,7 @@ import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/bottom_nav_bar_screen.dart';
+import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/user_profile_banner.dart';
 
 
@@ -53,22 +54,21 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: ScreenBackground(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const UserProfileBanner(),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(
-                    'Add new task',
-                    style: Theme.of(context).textTheme.titleLarge,
+                  const Text(
+                    'Add new task',style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(
                     height: 16,
@@ -82,7 +82,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                   ),
                   TextFormField(
                     controller: _descriptionTEController,
-                    maxLines: 4,
+                    maxLines: 9,
                     decoration: const InputDecoration(
                       hintText: 'Description',
                     ),

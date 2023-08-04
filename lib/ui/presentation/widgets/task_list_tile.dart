@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+
 import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 
 class TaskListTile extends StatefulWidget {
   const TaskListTile({
-    super.key, required this.data,
+    super.key,
+    required this.data,
   });
 
   final TaskData data;
@@ -21,31 +25,45 @@ class _TaskListTileState extends State<TaskListTile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.data.description ?? ''),
-          Text(widget.data.createdDate ?? ''),
+          Text('Date: ${widget.data.createdDate ?? ''}'),
           Row(
             children: [
-              Chip(
-                label: Text(
-                  widget.data.status ?? 'New',
-                  style: const TextStyle(color: Colors.white),
+              Container(
+                width: 100, // Set the desired width for the chip
+                child: Chip(
+                  label: Center(
+                    child: Text(
+                      widget.data.status ?? 'New',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  backgroundColor: Colors.blue[400],
                 ),
-                backgroundColor: Colors.blue,
               ),
               const Spacer(),
-              IconButton(
-                  onPressed: () {
-
-                  },
-                  icon: Icon(
-                    Icons.delete_forever_outlined,
-                    color: Colors.red.shade300,
-                  )),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.edit,
-                    color: Colors.green,
-                  )),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      debugPrint("Edited");
+                    },
+                    icon: const Icon(
+                      Icons.edit_location_alt_rounded,
+                      color: Colors.green,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      debugPrint("delete");
+                    },
+                    icon: Icon(
+                      Icons.delete_outline_sharp,
+                      color: Colors.red.shade300,
+                    ),
+                  )
+                ],
+              ),
             ],
           )
         ],
