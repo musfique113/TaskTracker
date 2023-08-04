@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
 
-class SummaryCard extends StatelessWidget {
-  const SummaryCard({
+class FixedPositionCard extends StatelessWidget {
+  final int number;
+  final String title;
+
+  const FixedPositionCard({
     Key? key,
     required this.number,
     required this.title,
   }) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center, // Center the card horizontally
+      children: [
+        SummaryCard(number: number, title: title),
+      ],
+    );
+  }
+}
+
+class SummaryCard extends StatelessWidget {
   final int number;
   final String title;
+
+  const SummaryCard({
+    required this.number,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +42,24 @@ class SummaryCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Text(
-                    '${number < 10 ? '0$number' : number}',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
+                children: [
+                  Expanded( // Wrap the Column with Expanded
+                    child: Text(
+                      '${number < 10 ? '0$number' : number}',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-
-                ),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-              ],
+                ]
             ),
           ),
         ),
