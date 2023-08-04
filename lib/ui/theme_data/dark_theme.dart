@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppDarkTheme {
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
+    fontFamily: "Poppins",
     primarySwatch: Colors.deepOrange,
     inputDecorationTheme: const InputDecorationTheme(
       filled: true,
@@ -11,8 +12,9 @@ class AppDarkTheme {
       border: OutlineInputBorder(borderSide: BorderSide.none),
     ),
     textTheme: const TextTheme(
-      headline6: TextStyle(
+      titleLarge: TextStyle(
         fontSize: 24,
+        fontFamily: "Poppins",
         color: Colors.black,
         fontWeight: FontWeight.w500,
         letterSpacing: 0.6,

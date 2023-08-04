@@ -4,6 +4,7 @@ class AppLightTheme {
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primarySwatch: Colors.green,
+    fontFamily: "Poppins",
     inputDecorationTheme: const InputDecorationTheme(
       filled: true,
       fillColor: Colors.white,
@@ -11,8 +12,9 @@ class AppLightTheme {
       border: OutlineInputBorder(borderSide: BorderSide.none),
     ),
     textTheme: const TextTheme(
-      headline6: TextStyle(
+      titleLarge: TextStyle(
         fontSize: 24,
+        fontFamily: 'Poppins',
         color: Colors.black,
         fontWeight: FontWeight.w500,
         letterSpacing: 0.6,
