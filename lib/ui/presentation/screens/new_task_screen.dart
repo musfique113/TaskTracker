@@ -5,6 +5,7 @@ import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/add_new_task_screen.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/update_task_status.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/summary_card.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/task_list_tile.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/user_profile_banner.dart';
@@ -82,6 +83,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       //getNewTasks();
       _taskListModel.data!.removeWhere((element) => element.sId == taskId);
       if (mounted) {
+        getCountSummary();
         setState(() {});
       }
     } else {
@@ -141,7 +143,9 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                           onDeleteTab: () {
                             deleteTask(_taskListModel.data![index].sId!);
                           },
-                          onEditTab: () {},
+                          onEditTab: () {
+                            showStatusUpdateBottomSheet(_taskListModel.data![index]);
+                            },
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {
@@ -163,6 +167,19 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                   builder: (context) => const AddNewTaskScreen()));
         },
       ),
+    );
+  }
+
+  void showStatusUpdateBottomSheet(TaskData task) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return UpdateTaskStatusSheet(task: task, onUpdate: () {
+          getNewTasks();
+          getCountSummary();
+        });
+      },
     );
   }
 }
