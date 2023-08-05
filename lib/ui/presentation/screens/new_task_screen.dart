@@ -79,7 +79,11 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     final NetworkResponse response =
         await NetworkCaller().getRequest(Urls.deleteTasks(taskId));
     if (response.isSuccess) {
-      getNewTasks();
+      //getNewTasks();
+      _taskListModel.data!.removeWhere((element) => element.sId == taskId);
+      if (mounted) {
+        setState(() {});
+      }
     } else {
       if (mounted) {
         // ignore: use_build_context_synchronously
