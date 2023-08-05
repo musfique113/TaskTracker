@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 import 'package:taskmanager_ostad/data/models/task_list_model.dart';
@@ -20,11 +18,19 @@ class TaskListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(data.title ?? 'Unknown'),
+      title: Text(data.title ?? 'Unknown',
+          style: TextStyle(
+              fontWeight: FontWeight.w500, fontSize: 17, color: Colors.black)),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(data.description ?? ''),
+         // Text(data.description ?? '',style: TextStyle(color: Colors.black38,fontSize: 15),),
+          Text(
+            data.description!.length > 100
+                ? "${data.description!.substring(0, 100)}..."
+                : data.description.toString(),
+            style: const TextStyle(color: Colors.black38, fontSize: 15),
+          ),
           Text('Date: ${data.createdDate ?? ''}'),
           Row(
             children: [
@@ -34,7 +40,7 @@ class TaskListTile extends StatelessWidget {
                   label: Center(
                     child: Text(
                       data.status ?? 'New',
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),
                   backgroundColor: Colors.blue[400],

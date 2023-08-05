@@ -77,182 +77,186 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ScreenBackground(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Join With Us",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                        fontSize: 36,
-                        letterSpacing: 0.6),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  TextFormField(
-                      controller: _emailTEController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                      ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email address';
-                        }
-
-                        // Check if the email address is a valid format.
-                        final regex = RegExp(
-                            r"^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
-                        if (!regex.hasMatch(value)) {
-                          return 'Please enter a valid email address';
-                        }
-
-                        return null;
-                      }
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                    controller: _firstNameTEController,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      hintText: "First Name",
+        child: SingleChildScrollView(
+          //padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).viewInsets.bottom),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Join With Us",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 36,
+                          letterSpacing: 0.6),
                     ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your first name';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                    controller: _lastNameTEController,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      hintText: "Last Name",
+                    const SizedBox(
+                      height: 30,
                     ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your last name';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                    controller: _mobileTEController,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      hintText: "Mobile",
-                    ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your mobile number';
-                      }
-
-                      // Check if the mobile number is 10 digits long.
-                      if (value.length != 11) {
-                        return 'Mobile number must be 11 digits long';
-                      }
-
-                      // Check if the mobile number starts with a 0,1.
-                      if (value[0] != '0' && value[0] != '1') {
-                        return 'Mobile number must start with 0 and 1';
-                      }
-
-                      // Check if the mobile number is a valid number.
-                      try {
-                        int.parse(value);
-                      } catch (e) {
-                        return 'Mobile number must be a valid number';
-                      }
-
-                      return null;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                      controller: _passwordTEController,
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: !_passwordVisible,
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        suffixIcon: IconButton(
-                          icon: _passwordVisible
-                              ? Icon(Icons.visibility)
-                              : Icon(Icons.visibility_off),
-                          onPressed: () {
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
+                    TextFormField(
+                      
+                        controller: _emailTEController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          hintText: "Email",
                         ),
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email address';
+                          }
+
+                          // Check if the email address is a valid format.
+                          final regex = RegExp(
+                              r"^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
+                          if (!regex.hasMatch(value)) {
+                            return 'Please enter a valid email address';
+                          }
+
+                          return null;
+                        }
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _firstNameTEController,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                        hintText: "First Name",
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter a password';
+                          return 'Please enter your first name';
                         }
-                        // You can add more specific password validation here if needed.
                         return null;
-                      }),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Visibility(
-                      visible: _signUpInProgress == false,
-                      replacement: const Center(child: CircularProgressIndicator()),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
-                            _userSignUp();
-                          },
-                          child: const Icon(Icons.arrow_forward_ios)),
+                      },
                     ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Have an account?",
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: 0.3),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _lastNameTEController,
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                        hintText: "Last Name",
                       ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginScreen()));
-                          },
-                          child: const Text("Sign In"))
-                    ],
-                  )
-                ],
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your last name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      controller: _mobileTEController,
+                      keyboardType: TextInputType.phone,
+                      decoration: const InputDecoration(
+                        hintText: "Mobile",
+                      ),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your mobile number';
+                        }
+
+                        // Check if the mobile number is 10 digits long.
+                        if (value.length != 11) {
+                          return 'Mobile number must be 11 digits long';
+                        }
+
+                        // Check if the mobile number starts with a 0,1.
+                        if (value[0] != '0' && value[0] != '1') {
+                          return 'Mobile number must start with 0 and 1';
+                        }
+
+                        // Check if the mobile number is a valid number.
+                        try {
+                          int.parse(value);
+                        } catch (e) {
+                          return 'Mobile number must be a valid number';
+                        }
+
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                        controller: _passwordTEController,
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: !_passwordVisible,
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          suffixIcon: IconButton(
+                            icon: _passwordVisible
+                                ? Icon(Icons.visibility)
+                                : Icon(Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
+                        ),
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a password';
+                          }
+                          // You can add more specific password validation here if needed.
+                          return null;
+                        }),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Visibility(
+                        visible: _signUpInProgress == false,
+                        replacement: const Center(child: CircularProgressIndicator()),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              _userSignUp();
+                            },
+                            child: const Icon(Icons.arrow_forward_ios)),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Have an account?",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 0.3),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginScreen()));
+                            },
+                            child: const Text("Sign In"))
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
