@@ -64,7 +64,7 @@ class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
                       itemCount: _taskListModel.data?.length ?? 0,
                       itemBuilder: (context, index) {
                         return TaskListTile(
-                          data: _taskListModel.data![index],
+                          data: _taskListModel.data![index], onEditTab: () {  }, onDeleteTab: () {  },
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {

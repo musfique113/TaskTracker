@@ -32,7 +32,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: ScreenBackground(
         child: Column(
           children: [
-            UserProfileBanner(),
+            const UserProfileBanner(),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -47,12 +47,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         .titleLarge,
                   ),
                   const SizedBox(height: 16,),
-                  _image != null
-                      ? Image.file(_image!, height: 50, width: 50, fit: BoxFit.cover,)
-                      : ElevatedButton(
-
-                    onPressed: _getImageFromGallery,
-                    child: Icon(Icons.add_a_photo),
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(16),
+                          color: Colors.green,
+                          child: Text('Photos',style: TextStyle(color: Colors.white),),
+                        )
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 8,),
                   TextFormField(

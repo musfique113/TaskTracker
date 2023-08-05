@@ -4,28 +4,28 @@ import 'package:flutter/material.dart';
 
 import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 
-class TaskListTile extends StatefulWidget {
+class TaskListTile extends StatelessWidget {
+  final VoidCallback onDeleteTab;
+  final VoidCallback onEditTab;
+
   const TaskListTile({
     super.key,
     required this.data,
+    required this.onDeleteTab,
+    required this.onEditTab,
   });
 
   final TaskData data;
 
   @override
-  State<TaskListTile> createState() => _TaskListTileState();
-}
-
-class _TaskListTileState extends State<TaskListTile> {
-  @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(widget.data.title ?? 'Unknown'),
+      title: Text(data.title ?? 'Unknown'),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.data.description ?? ''),
-          Text('Date: ${widget.data.createdDate ?? ''}'),
+          Text(data.description ?? ''),
+          Text('Date: ${data.createdDate ?? ''}'),
           Row(
             children: [
               Container(
@@ -33,7 +33,7 @@ class _TaskListTileState extends State<TaskListTile> {
                 child: Chip(
                   label: Center(
                     child: Text(
-                      widget.data.status ?? 'New',
+                      data.status ?? 'New',
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
@@ -45,18 +45,14 @@ class _TaskListTileState extends State<TaskListTile> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () {
-                      debugPrint("Edited");
-                    },
+                    onPressed: onEditTab,
                     icon: const Icon(
                       Icons.edit_location_alt_rounded,
                       color: Colors.green,
                     ),
                   ),
                   IconButton(
-                    onPressed: () {
-                      debugPrint("delete");
-                    },
+                    onPressed: onDeleteTab,
                     icon: Icon(
                       Icons.delete_outline_sharp,
                       color: Colors.red.shade300,

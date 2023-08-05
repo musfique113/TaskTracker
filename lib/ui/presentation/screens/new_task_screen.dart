@@ -9,7 +9,6 @@ import 'package:taskmanager_ostad/ui/presentation/widgets/summary_card.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/task_list_tile.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/user_profile_banner.dart';
 
-
 class NewTaskScreen extends StatefulWidget {
   const NewTaskScreen({Key? key}) : super(key: key);
 
@@ -18,7 +17,9 @@ class NewTaskScreen extends StatefulWidget {
 }
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
-  bool _getCountSummaryInProgress = false, _getNewTaskInProgress = false;
+  bool _getCountSummaryInProgress = false,
+      _getNewTaskInProgress = false,
+      _deleteInProgress = false;
   SummaryCountModel _summaryCountModel = SummaryCountModel();
   TaskListModel _taskListModel = TaskListModel();
 
@@ -74,54 +75,45 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     }
   }
 
+  Future<void> deleteTask(String taskId) async {
+    final NetworkResponse response =
+        await NetworkCaller().getRequest(Urls.deleteTasks(taskId));
+    if (response.isSuccess) {
+      getNewTasks();
+    } else {
+      if (mounted) {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Deletion failed")));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () async {
-            getNewTasks();
-            getCountSummary();
-          },
-
-          child: Column(
-            children: [
-              const UserProfileBanner(),
-              _getCountSummaryInProgress
-                  ? const LinearProgressIndicator()
-                  : Padding(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          getNewTasks();
+          getCountSummary();
+        },
+        child: Column(
+          children: [
+            const UserProfileBanner(),
+            _getCountSummaryInProgress
+                ? const LinearProgressIndicator()
+                : Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SizedBox(
-                        height: 80,
-                        width: double.infinity,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: _summaryCountModel.data?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return SummaryCard(
-                              title: _summaryCountModel.data![index].sId ?? 'New',
-                              number: _summaryCountModel.data![index].sum ?? 0,
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const Divider(
-                              height: 4,
-                            );
-                          },
-                        ),
-                      ),
-                  ),
-
-              Expanded(
-                child: _getNewTaskInProgress
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ListView.separated(
-                        itemCount: _taskListModel.data?.length ?? 0,
+                      height: 80,
+                      width: double.infinity,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _summaryCountModel.data?.length ?? 0,
                         itemBuilder: (context, index) {
-                          return TaskListTile(
-                            data: _taskListModel.data![index],
+                          return SummaryCard(
+                            title: _summaryCountModel.data![index].sId ?? 'New',
+                            number: _summaryCountModel.data![index].sum ?? 0,
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
@@ -130,9 +122,32 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                           );
                         },
                       ),
-              ),
-            ],
-          ),
+                    ),
+                  ),
+            Expanded(
+              child: _getNewTaskInProgress
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.separated(
+                      itemCount: _taskListModel.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return TaskListTile(
+                          data: _taskListModel.data![index],
+                          onDeleteTab: () {
+                            deleteTask(_taskListModel.data![index].sId!);
+                          },
+                          onEditTab: () {},
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const Divider(
+                          height: 4,
+                        );
+                      },
+                    ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
