@@ -39,8 +39,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               const SizedBox(
                 height: 24,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
                   'Update Profile',
                   style: TextStyle(
@@ -68,7 +68,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           children: [
                             Container(
                               padding: const EdgeInsets.all(14),
-                              color: Colors.grey,
+                              color: Colors.green,
                               child: const Text(
                                 'Photos',
                                 style: TextStyle(color: Colors.white),

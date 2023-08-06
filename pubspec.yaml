@@ -38,6 +38,7 @@ dependencies:
   image_picker: ^1.0.1
   # google_nav_bar: ^5.0.6
   curved_navigation_bar: ^1.0.3
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

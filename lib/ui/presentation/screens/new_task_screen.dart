@@ -124,7 +124,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                         },
                         separatorBuilder: (BuildContext context, int index) {
                           return const Divider(
-                            height: 4,
+                            height: 1,
                           );
                         },
                       ),

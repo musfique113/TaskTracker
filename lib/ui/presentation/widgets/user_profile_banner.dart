@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:taskmanager_ostad/data/models/auth_utility.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
@@ -37,14 +38,25 @@ class _UserProfileBannerState extends State<UserProfileBanner> {
               child: Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      AuthUtility.userInfo.data?.photo ?? '',
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      placeholder: (_, __) =>
+                          const Icon(Icons.account_circle_outlined),
+                      imageUrl: AuthUtility.userInfo.data?.photo ?? '',
+                      errorWidget: (_, __, ___) =>
+                          const Icon(Icons.account_circle_outlined),
                     ),
-                    onBackgroundImageError: (_, __) {
-                      const Icon(Icons.image);
-                    },
-                    radius: 18,
                   ),
+
+                  // CircleAvatar(
+                  //   backgroundImage: NetworkImage(
+                  //     AuthUtility.userInfo.data?.photo ?? '',
+                  //   ),
+                  //   onBackgroundImageError: (_, __) {
+                  //     const Icon(Icons.image);
+                  //   },
+                  //   radius: 18,
+                  // ),
                   const SizedBox(
                     width: 16,
                   ),
@@ -78,7 +90,7 @@ class _UserProfileBannerState extends State<UserProfileBanner> {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
-                      (route) => false);
+                  (route) => false);
             }
           },
           icon: const Icon(Icons.logout),
