@@ -43,7 +43,7 @@ class _UserProfileBannerState extends State<UserProfileBanner> {
                     onBackgroundImageError: (_, __) {
                       const Icon(Icons.image);
                     },
-                    radius: 15,
+                    radius: 18,
                   ),
                   const SizedBox(
                     width: 16,
