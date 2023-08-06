@@ -19,6 +19,7 @@ class _UserProfileBannerState extends State<UserProfileBanner> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
       backgroundColor: Colors.green,
       title: GestureDetector(
         onTap: () {
