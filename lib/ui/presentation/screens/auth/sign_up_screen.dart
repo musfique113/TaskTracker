@@ -100,7 +100,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: 30,
                     ),
                     TextFormField(
-                      
                         controller: _emailTEController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(

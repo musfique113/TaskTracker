@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="taskmanager_ostad"
+        android:label="Task Tracker"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

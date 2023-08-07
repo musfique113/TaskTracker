@@ -27,7 +27,6 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   void initState() {
     super.initState();
-    // after widget binding
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getCountSummary();
       getNewTasks();
