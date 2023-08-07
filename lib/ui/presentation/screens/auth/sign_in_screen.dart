@@ -3,9 +3,10 @@ import 'package:taskmanager_ostad/data/models/auth_utility.dart';
 import 'package:taskmanager_ostad/data/models/login_model.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/email_verification_screen.dart';
+import 'package:taskmanager_ostad/ui/presentation/screens/auth/email_verification_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_up_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
+import 'package:taskmanager_ostad/ui/ui_components/form_validator.dart';
 
 import '../../../../data/utils/urls.dart';
 import '../bottom_nav_bar_screen.dart';
@@ -94,20 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: InputDecoration(
                         hintText: "Email",
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email address';
-                        }
-
-                        // Check if the email address is a valid format.
-                        final regex = RegExp(
-                            r"^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
-                        if (!regex.hasMatch(value)) {
-                          return 'Please enter a valid email address';
-                        }
-
-                        return null;
-                      }),
+                      validator: FormValidator.validateEmail),
                   const SizedBox(
                     height: 15,
                   ),
@@ -128,13 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a password';
-                        }
-                        // You can add more specific password validation here if needed.
-                        return null;
-                      }),
+                      validator: FormValidator.validPasswordLogin),
                   const SizedBox(
                     height: 15,
                   ),

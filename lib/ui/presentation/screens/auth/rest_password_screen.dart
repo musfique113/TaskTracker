@@ -5,6 +5,7 @@ import 'package:taskmanager_ostad/data/utils/urls.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/auth/otp_verification_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
+import 'package:taskmanager_ostad/ui/ui_components/form_validator.dart';
 
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -97,12 +98,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       decoration: const InputDecoration(
                         hintText: 'Password',
                       ),
-                      validator: (String? value) {
-                        if (value?.isEmpty ?? true) {
-                          return 'Enter your password';
-                        }
-                        return null;
-                      },
+                      validator: FormValidator.validPasswordSignUp,
                     ),
                     const SizedBox(
                       height: 16,

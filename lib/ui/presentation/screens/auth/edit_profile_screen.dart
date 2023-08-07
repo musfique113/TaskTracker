@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/user_profile_banner.dart';
+import 'package:taskmanager_ostad/ui/ui_components/form_validator.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -13,7 +14,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-
   bool _passwordVisible = false;
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _firstNameTEController = TextEditingController();
@@ -78,8 +78,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               width: 16,
                             ),
                             Visibility(
-                                visible: imageFile != null,
-                                child: Text(imageFile?.name ?? '',overflow: TextOverflow.fade,softWrap: true,),)
+                              visible: imageFile != null,
+                              child: Text(
+                                imageFile?.name ?? '',
+                                overflow: TextOverflow.fade,
+                                softWrap: true,
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -88,26 +93,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       height: 12,
                     ),
                     TextFormField(
-
-                        controller: _emailTEController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          hintText: "Email",
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email address';
-                          }
-
-                          // Check if the email address is a valid format.
-                          final regex = RegExp(
-                              r"^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
-                          if (!regex.hasMatch(value)) {
-                            return 'Please enter a valid email address';
-                          }
-
-                          return null;
-                        }
+                      controller: _emailTEController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        hintText: "Email",
+                      ),
+                      validator: FormValidator.validateEmail,
                     ),
                     const SizedBox(
                       height: 8,
@@ -118,12 +109,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       decoration: const InputDecoration(
                         hintText: "First Name",
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your first name';
-                        }
-                        return null;
-                      },
+                      validator: FormValidator.validateName,
                     ),
                     const SizedBox(
                       height: 8,
@@ -134,12 +120,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       decoration: const InputDecoration(
                         hintText: "Last Name",
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your last name';
-                        }
-                        return null;
-                      },
+                      validator: FormValidator.validateName,
                     ),
                     const SizedBox(
                       height: 8,
@@ -150,30 +131,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       decoration: const InputDecoration(
                         hintText: "Mobile",
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your mobile number';
-                        }
-
-                        // Check if the mobile number is 10 digits long.
-                        if (value.length != 11) {
-                          return 'Mobile number must be 11 digits long';
-                        }
-
-                        // Check if the mobile number starts with a 0,1.
-                        if (value[0] != '0' && value[0] != '1') {
-                          return 'Mobile number must start with 0 and 1';
-                        }
-
-                        // Check if the mobile number is a valid number.
-                        try {
-                          int.parse(value);
-                        } catch (e) {
-                          return 'Mobile number must be a valid number';
-                        }
-
-                        return null;
-                      },
+                      validator: FormValidator.validateMobileNumber,
                     ),
                     const SizedBox(
                       height: 8,
@@ -195,13 +153,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             },
                           ),
                         ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a password';
-                          }
-                          // You can add more specific password validation here if needed.
-                          return null;
-                        }),
+                        validator: FormValidator.validPasswordSignUp),
                     const SizedBox(
                       height: 16,
                     ),

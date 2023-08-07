@@ -4,6 +4,7 @@ import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
 import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
 import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
+import 'package:taskmanager_ostad/ui/ui_components/form_validator.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -105,20 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         decoration: const InputDecoration(
                           hintText: "Email",
                         ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email address';
-                          }
-
-                          // Check if the email address is a valid format.
-                          final regex = RegExp(
-                              r"^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
-                          if (!regex.hasMatch(value)) {
-                            return 'Please enter a valid email address';
-                          }
-
-                          return null;
-                        }
+                        validator: FormValidator.validateEmail
                     ),
                     const SizedBox(
                       height: 8,
@@ -129,12 +117,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       decoration: const InputDecoration(
                         hintText: "First Name",
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your first name';
-                        }
-                        return null;
-                      },
+                      validator: FormValidator.validateName,
                     ),
                     const SizedBox(
                       height: 8,
@@ -145,12 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       decoration: const InputDecoration(
                         hintText: "Last Name",
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your last name';
-                        }
-                        return null;
-                      },
+                      validator: FormValidator.validateName,
                     ),
                     const SizedBox(
                       height: 8,
@@ -161,30 +139,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       decoration: const InputDecoration(
                         hintText: "Mobile",
                       ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your mobile number';
-                        }
-
-                        // Check if the mobile number is 10 digits long.
-                        if (value.length != 11) {
-                          return 'Mobile number must be 11 digits long';
-                        }
-
-                        // Check if the mobile number starts with a 0,1.
-                        if (value[0] != '0' && value[0] != '1') {
-                          return 'Mobile number must start with 0 and 1';
-                        }
-
-                        // Check if the mobile number is a valid number.
-                        try {
-                          int.parse(value);
-                        } catch (e) {
-                          return 'Mobile number must be a valid number';
-                        }
-
-                        return null;
-                      },
+                      validator: FormValidator.validateMobileNumber,
                     ),
                     const SizedBox(
                       height: 8,
@@ -206,13 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                         ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a password';
-                          }
-                          // You can add more specific password validation here if needed.
-                          return null;
-                        }),
+                        validator: FormValidator.validPasswordSignUp),
                     const SizedBox(
                       height: 15,
                     ),
