@@ -8,6 +8,8 @@ TaskTracker is a Flutter app that utilizes a REST API to provide users with task
 - Profile Editing: Edit user profile information.
 - Password Recovery: Reset password using email and OTP verification.
 - Task State Tracking: Manage tasks with progress, canceled, completed, and new states.
+- Task Status Modification: Ability to change the status of  tasks using the edit icon.
+- Task Deletion: Users can delete tasks when they are no longer relevant or needed.
 - Reusable Components: Built with a focus on reusable components for maintaining clean code.
 - Clean Architecture: Designed to follow a clean architecture pattern.
 - Validation: Implemented necessary input validation for enhanced data integrity.
