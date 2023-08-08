@@ -19,4 +19,7 @@ class Urls {
   static String otpVerify(String email, String otp) => '$_baseUrl/RecoverVerifyOTP/$email/$otp';
   static String resetPassword = '$_baseUrl/RecoverResetPass';
   static String otpMatch(String otp,String email) => '$_baseUrl/RecoverVerifyOTP/$email/$otp';
+
+
+  static String updateProfile = '$_baseUrl/profileUpdate';
 }
