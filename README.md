@@ -33,9 +33,30 @@ TaskTracker is a Flutter app that utilizes a REST API to provide users with task
 
 ## API Documentation
 
+The Task Manager REST API allows users to manage tasks, user profiles, and account recovery. It provides various endpoints for user registration, login, task creation, updating task status, listing tasks by status, deleting tasks, and managing account recovery through email verification and password reset. The API is designed with a combination of POST and GET requests, utilizing JSON payloads for data exchange.
 
+## API Endpoints
+
+| Endpoint | Description |
+|---|---|
+| POST /registration | Registers a new user with the provided information, including email, first name, last name, mobile number, password, and optional photo. |
+| POST /login | Logs in a user with their email and password, providing an authentication token for subsequent requests. |
+| POST /profileUpdate | Updates the user's profile information, such as the mobile number, with the provided token for authorization. |
+| POST /createTask | Creates a new task with a title, description, and status, requiring an authentication token for authorization. |
+| GET /updateTaskStatus/{taskId}/{status} | Updates the status of a task identified by its ID with the provided status, requiring an authentication token for authorization. |
+| GET /listTaskByStatus/{status} | Retrieves a list of tasks filtered by the specified status, requiring an authentication token for authorization. |
+| GET /deleteTask/{taskId} | Deletes a task identified by its ID, requiring an authentication token for authorization. |
+| GET /taskStatusCount | Retrieves the count of tasks in different statuses, requiring an authentication token for authorization. |
+| GET /RecoverVerifyEmail/{email} | Initiates the account recovery process by sending an email verification link to the provided email address. |
+| GET /RecoverVerifyOTP/{email}/{otp} | Verifies the recovery OTP (One-Time Password) sent to the user's email during the account recovery process. |
+| POST /RecoverResetPass | Resets the user's password during the account recovery process, requiring the email, OTP, and new password. |
+
+## Variables
+
+* BaseURL: The base URL for all API endpoints.
+* token: An authentication token used for authorization in requests.
 
 ---
 
 ## Clone the repository:
-`git clone https://github.com/your-username/TaskTracker.git`
+```git clone https://github.com/your-username/TaskTracker.git```
