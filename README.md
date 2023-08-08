@@ -2,6 +2,7 @@
   <img src="https://github.com/musfique113/TaskTracker/assets/53111065/9957c873-4ff1-41d9-8c81-9092d35a5b17" width="200" height="200">
 </h1>
 
+[![wakatime](https://wakatime.com/badge/user/18368562-fe00-4dd1-a78f-9403210fea47/project/6d3fa3b2-1a51-4c1f-83e1-7c73eee65218.svg)](https://wakatime.com/badge/user/18368562-fe00-4dd1-a78f-9403210fea47/project/6d3fa3b2-1a51-4c1f-83e1-7c73eee65218)
 # TaskTracker App
 
 TaskTracker is a Flutter app that utilizes a REST API to provide users with task tracking functionalities. The app allows users to create an account, log in, edit their profile, recover a forgotten password using email and OTP verification, and features a clean and intuitive UI for managing task states such as new progress, canceled and completed.
