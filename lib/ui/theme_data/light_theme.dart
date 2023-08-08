@@ -12,14 +12,19 @@ class AppLightTheme {
       border: OutlineInputBorder(borderSide: BorderSide.none),
     ),
     textTheme: const TextTheme(
-      titleLarge: TextStyle(
-        fontSize: 24,
-        fontFamily: 'Poppins',
-        color: Colors.black,
-        fontWeight: FontWeight.w500,
-        letterSpacing: 0.6,
-      ),
-    ),
+        titleSmall: TextStyle(
+          fontSize: 24,
+          fontFamily: 'Poppins',
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 0.6,
+        ),
+        titleLarge: (TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+            fontSize: 36,
+            fontFamily: 'Poppins',
+            letterSpacing: 0.6))),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 10),

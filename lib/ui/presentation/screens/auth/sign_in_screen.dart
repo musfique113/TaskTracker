@@ -82,12 +82,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Get Started with",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        color: Colors.black,
+                        color: Colors.black87,
                         fontSize: 36,
                         letterSpacing: 0.6),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   TextFormField(
                       controller: _emailTEController,

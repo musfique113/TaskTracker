@@ -60,87 +60,87 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ScreenBackground(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 60,
-                  ),
-                  const Text("Your email address",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                          fontSize: 36,
-                          letterSpacing: 0.6)),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  const Text(
-                    "A 6 digits PIN will sent to your email address",
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black,
-                      fontSize: 16,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 60,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-
-                  TextFormField(
-                    controller: _emailTEController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: "Email",
-                    ),
-                    validator:FormValidator.validateEmail,
-                  ),
-
-
-
-
-                  SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Visibility(
-                      visible: _emailVerficationInProgress == false,
-                      replacement: Center(child: CircularProgressIndicator(),),
-                      child: ElevatedButton(
-                          onPressed: () {
-                           sendOTPTOEmail();
-                          },
-                          child: const Icon(Icons.arrow_circle_right_outlined)),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Have an account?",
+                    const Text("Your email address",
                         style: TextStyle(
-                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: 0.3),
+                            fontSize: 33,
+                            letterSpacing: 0.6)),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    const Text(
+                      "A 6 digits PIN will sent to your email address",
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black,
+                        fontSize: 14,
                       ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("Sign In"))
-                    ],
-                  )
-                ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+
+                    TextFormField(
+                      controller: _emailTEController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: "Email",
+                      ),
+                      validator:FormValidator.validateEmail,
+                    ),
+
+
+                    SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Visibility(
+                        visible: _emailVerficationInProgress == false,
+                        replacement: Center(child: CircularProgressIndicator(),),
+                        child: ElevatedButton(
+                            onPressed: () {
+                             sendOTPTOEmail();
+                            },
+                            child: const Icon(Icons.arrow_circle_right_outlined)),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Have an account?",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 0.3),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Sign In"))
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
