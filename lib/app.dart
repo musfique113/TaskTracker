@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/splash_screen.dart';
-import 'package:taskmanager_ostad/ui/theme_data/dark_theme.dart';
-import 'package:taskmanager_ostad/ui/theme_data/light_theme.dart';
+import 'package:taskmanager_ostad/presentation/components/theme_data/dark_theme.dart';
+import 'package:taskmanager_ostad/presentation/screens/splash_screen.dart';
+import 'presentation/components/theme_data/light_theme.dart';
 
 class TaskManagerApp extends StatefulWidget {
   static GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
+
   const TaskManagerApp({super.key});
 
   @override

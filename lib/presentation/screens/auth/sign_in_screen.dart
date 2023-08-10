@@ -3,11 +3,10 @@ import 'package:taskmanager_ostad/data/models/auth_utility.dart';
 import 'package:taskmanager_ostad/data/models/login_model.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/email_verification_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_up_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
-import 'package:taskmanager_ostad/ui/ui_components/form_validator.dart';
-
+import 'package:taskmanager_ostad/presentation/components/ui_components/form_validator.dart';
+import 'package:taskmanager_ostad/presentation/screens/auth/email_verification_screen.dart';
+import 'package:taskmanager_ostad/presentation/screens/auth/sign_up_screen.dart';
+import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
 import '../../../../data/utils/urls.dart';
 import '../bottom_nav_bar_screen.dart';
 
@@ -27,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _signInProgress = false;
 
   Future<void> logIn() async {
-
     _signInProgress = true;
     setState(() {});
 
@@ -39,10 +37,8 @@ class _LoginScreenState extends State<LoginScreen> {
     final NetworkResponse response =
         await NetworkCaller().postRequest(Urls.login, requestBody);
     _signInProgress = false;
-    if(mounted){
-      setState(() {
-
-      });
+    if (mounted) {
+      setState(() {});
     }
 
     if (response.isSuccess) {
@@ -51,9 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
-                builder: (context) => const BottomNavbarScreen()),
-                (route) => false);
+            MaterialPageRoute(builder: (context) => const BottomNavbarScreen()),
+            (route) => false);
       }
     } else {
       if (mounted) {
@@ -61,8 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
             const SnackBar(content: Text('Incorrect email or password')));
       }
     }
-
-
   }
 
   @override
@@ -92,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                       controller: _emailTEController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Email",
                       ),
                       validator: FormValidator.validateEmail),
@@ -107,8 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: "Password",
                         suffixIcon: IconButton(
                           icon: _passwordVisible
-                              ? Icon(Icons.visibility)
-                              : Icon(Icons.visibility_off),
+                              ? const Icon(Icons.visibility)
+                              : const Icon(Icons.visibility_off),
                           onPressed: () {
                             setState(() {
                               _passwordVisible = !_passwordVisible;
@@ -124,9 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     child: Visibility(
                       visible: _signInProgress == false,
-                      replacement: Center(child: CircularProgressIndicator()),
+                      replacement: const Center(child: CircularProgressIndicator()),
                       child: ElevatedButton(
-                          onPressed: (){
+                          onPressed: () {
                             if (!_formKey.currentState!.validate()) {
                               return;
                             }
@@ -145,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      EmailVerificationScreen()));
+                                      const EmailVerificationScreen()));
                         },
                         child: const Text(
                           "Forgot Password",
@@ -167,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignUpScreen()));
+                                    builder: (context) => const SignUpScreen()));
                           },
                           child: const Text("Sign Up"))
                     ],

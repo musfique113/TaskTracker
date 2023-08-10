@@ -3,10 +3,9 @@ import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/bottom_nav_bar_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/user_profile_banner.dart';
-
+import 'package:taskmanager_ostad/presentation/screens/bottom_nav_bar_screen.dart';
+import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
+import 'package:taskmanager_ostad/presentation/widgets/user_profile_banner.dart';
 
 class AddNewTaskScreen extends StatefulWidget {
   const AddNewTaskScreen({Key? key}) : super(key: key);
@@ -69,7 +68,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                     height: 16,
                   ),
                   const Text(
-                    'Add new task',style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600),
+                    'Add new task',
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(
                     height: 16,
@@ -101,18 +101,22 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                       child: ElevatedButton(
                           onPressed: () {
                             addNewTask();
-                            if(mounted){
+                            if (mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Task added successfully')));
+                                  const SnackBar(
+                                      content:
+                                          Text('Task added successfully')));
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Task added failed')));
+                                  const SnackBar(
+                                      content: Text('Task added failed')));
                             }
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const BottomNavbarScreen()),
-                                    (route) => false);
+                                    builder: (context) =>
+                                        const BottomNavbarScreen()),
+                                (route) => false);
                             //Navigator.pushReplacementNamed(context, NewTaskScreen());
                           },
                           child: const Icon(Icons.arrow_forward_ios)),
@@ -127,7 +131,5 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     );
   }
 
-  void showEditBottomSheet(TaskData task){
-
-  }
+  void showEditBottomSheet(TaskData task) {}
 }

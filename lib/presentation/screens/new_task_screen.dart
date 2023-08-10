@@ -4,11 +4,11 @@ import 'package:taskmanager_ostad/data/models/summary_count_model.dart';
 import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/add_new_task_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/update_task_status.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/summary_card.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/task_list_tile.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/user_profile_banner.dart';
+import 'package:taskmanager_ostad/presentation/screens/add_new_task_screen.dart';
+import 'package:taskmanager_ostad/presentation/screens/update_task_status.dart';
+import 'package:taskmanager_ostad/presentation/widgets/summary_card.dart';
+import 'package:taskmanager_ostad/presentation/widgets/task_list_tile.dart';
+import 'package:taskmanager_ostad/presentation/widgets/user_profile_banner.dart';
 
 class NewTaskScreen extends StatefulWidget {
   const NewTaskScreen({Key? key}) : super(key: key);
@@ -143,8 +143,9 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                             deleteTask(_taskListModel.data![index].sId!);
                           },
                           onEditTab: () {
-                            showStatusUpdateBottomSheet(_taskListModel.data![index]);
-                            },
+                            showStatusUpdateBottomSheet(
+                                _taskListModel.data![index]);
+                          },
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {
@@ -174,10 +175,12 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       isScrollControlled: true,
       context: context,
       builder: (context) {
-        return UpdateTaskStatusSheet(task: task, onUpdate: () {
-          getNewTasks();
-          getCountSummary();
-        });
+        return UpdateTaskStatusSheet(
+            task: task,
+            onUpdate: () {
+              getNewTasks();
+              getCountSummary();
+            });
       },
     );
   }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taskmanager_ostad/data/models/auth_utility.dart';
@@ -6,9 +5,9 @@ import 'package:taskmanager_ostad/data/models/login_model.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/user_profile_banner.dart';
-import 'package:taskmanager_ostad/ui/ui_components/form_validator.dart';
+import 'package:taskmanager_ostad/presentation/components/ui_components/form_validator.dart';
+import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
+import 'package:taskmanager_ostad/presentation/widgets/user_profile_banner.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -56,7 +55,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
 
     final NetworkResponse response =
-    await NetworkCaller().postRequest(Urls.updateProfile, requestBody);
+        await NetworkCaller().postRequest(Urls.updateProfile, requestBody);
     _profileInProgress = false;
     if (mounted) {
       setState(() {});
@@ -200,8 +199,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             hintText: "Password",
                             suffixIcon: IconButton(
                               icon: _passwordVisible
-                                  ? Icon(Icons.visibility)
-                                  : Icon(Icons.visibility_off),
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off),
                               onPressed: () {
                                 setState(() {
                                   _passwordVisible = !_passwordVisible;
@@ -217,7 +216,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         width: double.infinity,
                         child: Visibility(
                           visible: _profileInProgress == false,
-                          replacement: Center(child: CircularProgressIndicator()),
+                          replacement:
+                              const Center(child: CircularProgressIndicator()),
                           child: ElevatedButton(
                             onPressed: () {
                               if (!_formKey.currentState!.validate()) {

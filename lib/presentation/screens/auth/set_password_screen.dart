@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/otp_verification_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
-import 'package:taskmanager_ostad/ui/ui_components/form_validator.dart';
-
+import 'package:taskmanager_ostad/presentation/components/ui_components/form_validator.dart';
+import 'package:taskmanager_ostad/presentation/screens/auth/sign_in_screen.dart';
+import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final String email, otp;
-
 
   const ResetPasswordScreen({Key? key, required this.email, required this.otp})
       : super(key: key);
@@ -23,7 +20,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   bool _passwordVisible = false;
   final TextEditingController _passwordTEController = TextEditingController();
   final TextEditingController _confirmPasswordTEController =
-  TextEditingController();
+      TextEditingController();
   bool _setPasswordInProgress = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -40,7 +37,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     };
 
     final NetworkResponse response =
-    await NetworkCaller().postRequest(Urls.resetPassword, requestBody);
+        await NetworkCaller().postRequest(Urls.resetPassword, requestBody);
     _setPasswordInProgress = false;
     if (mounted) {
       setState(() {});
@@ -52,7 +49,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const LoginScreen()),
-                (route) => false);
+            (route) => false);
       }
     } else {
       if (mounted) {
@@ -89,8 +86,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       Text(
                         'Minimum password should be 8 letters with numbers & symbols',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey,
-                        ),
+                              color: Colors.grey,
+                            ),
                       ),
                       const SizedBox(
                         height: 24,
@@ -103,8 +100,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             hintText: "Password",
                             suffixIcon: IconButton(
                               icon: _passwordVisible
-                                  ? Icon(Icons.visibility)
-                                  : Icon(Icons.visibility_off),
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off),
                               onPressed: () {
                                 setState(() {
                                   _passwordVisible = !_passwordVisible;
@@ -117,14 +114,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         height: 16,
                       ),
                       TextFormField(
-                        controller: _confirmPasswordTEController,
-                        keyboardType: TextInputType.emailAddress,
+                          controller: _confirmPasswordTEController,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             hintText: "Re-type Password",
                             suffixIcon: IconButton(
                               icon: _passwordVisible
-                                  ? Icon(Icons.visibility)
-                                  : Icon(Icons.visibility_off),
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off),
                               onPressed: () {
                                 setState(() {
                                   _passwordVisible = !_passwordVisible;
@@ -132,8 +129,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               },
                             ),
                           ),
-                        validator: FormValidator.validPasswordSignUp
-                      ),
+                          validator: FormValidator.validPasswordSignUp),
                       const SizedBox(
                         height: 16,
                       ),
@@ -164,7 +160,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           const Text(
                             "Have an account?",
                             style: TextStyle(
-                                fontWeight: FontWeight.w500, letterSpacing: 0.5),
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0.5),
                           ),
                           TextButton(
                               onPressed: () {
@@ -172,8 +169,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const LoginScreen()),
-                                        (route) => false);
+                                            const LoginScreen()),
+                                    (route) => false);
                               },
                               child: const Text('Sign in')),
                         ],

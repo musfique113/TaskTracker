@@ -5,7 +5,8 @@ import 'package:taskmanager_ostad/data/models/auth_utility.dart';
 import 'package:http/http.dart';
 import 'package:taskmanager_ostad/app.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
+import 'package:taskmanager_ostad/presentation/screens/auth/sign_in_screen.dart';
+
 
 class NetworkCaller {
   Future<NetworkResponse> getRequest(String url) async {

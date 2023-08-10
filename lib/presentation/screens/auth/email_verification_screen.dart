@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/otp_verification_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
-import 'package:taskmanager_ostad/ui/ui_components/form_validator.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-
+import 'package:taskmanager_ostad/presentation/components/ui_components/form_validator.dart';
+import 'package:taskmanager_ostad/presentation/screens/auth/otp_verification_screen.dart';
+import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
@@ -17,7 +15,6 @@ class EmailVerificationScreen extends StatefulWidget {
 }
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailTEController = TextEditingController();
   bool _emailVerficationInProgress = false;
@@ -55,7 +52,6 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +65,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 60,
                     ),
                     const Text("Your email address",
@@ -78,7 +74,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                             color: Colors.black,
                             fontSize: 33,
                             letterSpacing: 0.6)),
-                    SizedBox(
+                    const SizedBox(
                       height: 4,
                     ),
                     const Text(
@@ -89,36 +85,36 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         fontSize: 14,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
-
                     TextFormField(
                       controller: _emailTEController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Email",
                       ),
-                      validator:FormValidator.validateEmail,
+                      validator: FormValidator.validateEmail,
                     ),
-
-
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     SizedBox(
                       width: double.infinity,
                       child: Visibility(
                         visible: _emailVerficationInProgress == false,
-                        replacement: Center(child: CircularProgressIndicator(),),
+                        replacement: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                         child: ElevatedButton(
                             onPressed: () {
-                             sendOTPTOEmail();
+                              sendOTPTOEmail();
                             },
-                            child: const Icon(Icons.arrow_circle_right_outlined)),
+                            child:
+                                const Icon(Icons.arrow_circle_right_outlined)),
                       ),
                     ),
                     Row(

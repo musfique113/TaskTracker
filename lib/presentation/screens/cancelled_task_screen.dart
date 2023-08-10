@@ -3,54 +3,53 @@ import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/update_task_status.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/task_list_tile.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/user_profile_banner.dart';
+import 'package:taskmanager_ostad/presentation/screens/update_task_status.dart';
+import 'package:taskmanager_ostad/presentation/widgets/task_list_tile.dart';
+import 'package:taskmanager_ostad/presentation/widgets/user_profile_banner.dart';
 
-class InProgressTaskScreen extends StatefulWidget {
-  const InProgressTaskScreen({Key? key}) : super(key: key);
+class CanceledTaskScreen extends StatefulWidget {
+  const CanceledTaskScreen({Key? key}) : super(key: key);
 
   @override
-  State<InProgressTaskScreen> createState() => _InProgressTaskScreenState();
+  State<CanceledTaskScreen> createState() => _CanceledTaskScreenState();
 }
 
-class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
-  bool _getProgressTasksInProgress = false;
+class _CanceledTaskScreenState extends State<CanceledTaskScreen> {
+  bool _getCanceledTasksInProgress = false;
   TaskListModel _taskListModel = TaskListModel();
 
-  @override
-  void initState() {
-    super.initState();
-    // after widget binding
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getInProgressTasks();
-    });
-  }
-
-  Future<void> getInProgressTasks() async {
-    _getProgressTasksInProgress = true;
+  Future<void> getCanceledTasks() async {
+    _getCanceledTasksInProgress = true;
     if (mounted) {
       setState(() {});
     }
     final NetworkResponse response =
-        await NetworkCaller().getRequest(Urls.inProgressTasks);
+        await NetworkCaller().getRequest(Urls.canceledTasks);
     if (response.isSuccess) {
       TaskListModel allTasks = TaskListModel.fromJson(response.body!);
       _taskListModel.data =
-          allTasks.data?.where((task) => task.status == 'Progress').toList();
+          allTasks.data?.where((task) => task.status == 'Canceled').toList();
     } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('In progress tasks get failed')));
+            const SnackBar(content: Text('Completed tasks get failed')));
       }
     }
-    _getProgressTasksInProgress = false;
+    _getCanceledTasksInProgress = false;
     if (mounted) {
+      setState(() {});
+    } else {
       setState(() {});
     }
   }
 
-
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getCanceledTasks();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +58,7 @@ class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
         children: [
           const UserProfileBanner(),
           Expanded(
-            child: _getProgressTasksInProgress
+            child: _getCanceledTasksInProgress
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
@@ -68,12 +67,12 @@ class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
                     itemBuilder: (context, index) {
                       return TaskListTile(
                         data: _taskListModel.data![index],
+                        onDeleteTab: () {
+                          deleteTask(_taskListModel.data![index].sId!);
+                        },
                         onEditTab: () {
                           showStatusUpdateBottomSheet(
                               _taskListModel.data![index]);
-                        },
-                        onDeleteTab: () {
-                          deleteTask(_taskListModel.data![index].sId!);
                         },
                       );
                     },
@@ -91,7 +90,7 @@ class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
 
   Future<void> deleteTask(String taskId) async {
     final NetworkResponse response =
-    await NetworkCaller().getRequest(Urls.deleteTasks(taskId));
+        await NetworkCaller().getRequest(Urls.deleteTasks(taskId));
     if (response.isSuccess) {
       //getNewTasks();
       _taskListModel.data!.removeWhere((element) => element.sId == taskId);
@@ -112,9 +111,11 @@ class _InProgressTaskScreenState extends State<InProgressTaskScreen> {
       isScrollControlled: true,
       context: context,
       builder: (context) {
-        return UpdateTaskStatusSheet(task: task, onUpdate: () {
-          getInProgressTasks();
-        });
+        return UpdateTaskStatusSheet(
+            task: task,
+            onUpdate: () {
+              getCanceledTasks();
+            });
       },
     );
   }

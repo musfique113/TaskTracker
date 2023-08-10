@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:taskmanager_ostad/data/models/auth_utility.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/edit_profile_screen.dart';
+import 'package:taskmanager_ostad/presentation/screens/auth/edit_profile_screen.dart';
+import 'package:taskmanager_ostad/presentation/screens/auth/sign_in_screen.dart';
 
 class UserProfileBanner extends StatefulWidget {
   final bool? isUpdateScreen;

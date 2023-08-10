@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
-import 'package:taskmanager_ostad/ui/ui_components/form_validator.dart';
+import 'package:taskmanager_ostad/presentation/components/ui_components/form_validator.dart';
+import 'package:taskmanager_ostad/presentation/screens/auth/sign_in_screen.dart';
+import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -28,10 +28,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<void> _userSignUp() async {
     _signUpInProgress = true;
-    if (mounted){
-      setState(() {
-
-      });
+    if (mounted) {
+      setState(() {});
     }
 
     Map<String, dynamic> requestBody = {
@@ -43,12 +41,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       "photo": ""
     };
 
-    final NetworkResponse response = await NetworkCaller().postRequest(Urls.registration, requestBody);
-    _signUpInProgress =false;
-    if (mounted){
-      setState(() {
-
-      });
+    final NetworkResponse response =
+        await NetworkCaller().postRequest(Urls.registration, requestBody);
+    _signUpInProgress = false;
+    if (mounted) {
+      setState(() {});
     }
     if (response.isSuccess) {
       _emailTEController.clear();
@@ -107,8 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           decoration: const InputDecoration(
                             hintText: "Email",
                           ),
-                          validator: FormValidator.validateEmail
-                      ),
+                          validator: FormValidator.validateEmail),
                       const SizedBox(
                         height: 8,
                       ),
@@ -153,8 +149,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             hintText: "Password",
                             suffixIcon: IconButton(
                               icon: _passwordVisible
-                                  ? Icon(Icons.visibility)
-                                  : Icon(Icons.visibility_off),
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off),
                               onPressed: () {
                                 setState(() {
                                   _passwordVisible = !_passwordVisible;
@@ -170,7 +166,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         width: double.infinity,
                         child: Visibility(
                           visible: _signUpInProgress == false,
-                          replacement: const Center(child: CircularProgressIndicator()),
+                          replacement:
+                              const Center(child: CircularProgressIndicator()),
                           child: ElevatedButton(
                               onPressed: () {
                                 if (!_formKey.currentState!.validate()) {
@@ -199,7 +196,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const LoginScreen()));
+                                        builder: (context) =>
+                                            const LoginScreen()));
                               },
                               child: const Text("Sign In"))
                         ],
@@ -214,6 +212,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
-
 }

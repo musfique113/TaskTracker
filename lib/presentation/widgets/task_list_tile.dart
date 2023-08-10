@@ -24,7 +24,7 @@ class TaskListTile extends StatelessWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         // Text(data.description ?? '',style: TextStyle(color: Colors.black38,fontSize: 15),),
+          // Text(data.description ?? '',style: TextStyle(color: Colors.black38,fontSize: 15),),
           Text(
             data.description!.length > 100
                 ? "${data.description!.substring(0, 100)}..."
