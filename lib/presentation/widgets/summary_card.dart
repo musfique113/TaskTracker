@@ -4,7 +4,8 @@ class SummaryCard extends StatelessWidget {
   final int number;
   final String title;
 
-  const SummaryCard({super.key,
+  const SummaryCard({
+    super.key,
     required this.number,
     required this.title,
   });
@@ -22,7 +23,8 @@ class SummaryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded( // Wrap the Column with Expanded
+                  Expanded(
+                    // Wrap the Column with Expanded
                     child: Text(
                       '${number < 10 ? '0$number' : number}',
                       style: const TextStyle(
@@ -38,8 +40,7 @@ class SummaryCard extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                ]
-            ),
+                ]),
           ),
         ),
       ),

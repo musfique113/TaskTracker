@@ -1,14 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/sign_in_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/auth/set_password_screen.dart';
-import 'package:taskmanager_ostad/ui/presentation/widgets/screen_background.dart';
-
+import 'package:taskmanager_ostad/presentation/screens/auth/set_password_screen.dart';
+import 'package:taskmanager_ostad/presentation/screens/auth/sign_in_screen.dart';
+import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String email;
@@ -41,9 +38,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => ResetPasswordScreen(
-                  email: widget.email,
-                  otp: _otpTEController.text,
-                )));
+                      email: widget.email,
+                      otp: _otpTEController.text,
+                    )));
       }
     } else {
       if (mounted) {
@@ -52,8 +49,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       }
     }
   }
-
-
 
 //   Future<void> verifyOTP() async {
 //   _otpVerificationInProgress = true;
@@ -99,8 +94,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 //   }
 // }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,8 +119,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     Text(
                       'A 6 digits pin will sent to your email address',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey,
-                      ),
+                            color: Colors.grey,
+                          ),
                     ),
                     const SizedBox(
                       height: 24,
@@ -152,21 +145,21 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           selectedFillColor: Colors.white,
                           selectedColor: Colors.green,
                         ),
-                        animationDuration: Duration(milliseconds: 300),
+                        animationDuration: const Duration(milliseconds: 300),
                         backgroundColor: Colors.white,
                         cursorColor: Colors.green,
                         enableActiveFill: true,
                         //errorAnimationController: errorController,
-                        //controller: textEditingController,
-                        onCompleted: (v) {
-                          print("Completed");
-                        },
-                        onChanged: (value) {
-                          print(value);
-                          // setState(() {
-                          //   currentText = value;
-                          // });
-                        },
+                        // //controller: textEditingController,
+                        // onCompleted: (v) {
+                        //   print("Completed");
+                        // },
+                        // onChanged: (value) {
+                        //   print(value);
+                        //   // setState(() {
+                        //   //   currentText = value;
+                        //   // });
+                        // },
                         // beforeTextPaste: (text) {
                         //   print("Allowing to paste $text");
                         //   //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
@@ -210,8 +203,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const LoginScreen()),
-                                      (route) => false);
+                                      builder: (context) =>
+                                          const LoginScreen()),
+                                  (route) => false);
                             },
                             child: const Text('Sign in')),
                       ],

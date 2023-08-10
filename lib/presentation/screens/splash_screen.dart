@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taskmanager_ostad/data/models/auth_utility.dart';
-import 'package:taskmanager_ostad/ui/presentation/screens/bottom_nav_bar_screen.dart';
-
-import '../../utilities/assets_path_utils.dart';
-
+import 'package:taskmanager_ostad/presentation/components/utilities/assets_path_utils.dart';
+import 'package:taskmanager_ostad/presentation/screens/bottom_nav_bar_screen.dart';
 import '../widgets/screen_background.dart';
 import 'auth/sign_in_screen.dart';
 
@@ -29,8 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  isLoggedIn ? const BottomNavbarScreen() : const LoginScreen()),
+              builder: (context) => isLoggedIn
+                  ? const BottomNavbarScreen()
+                  : const LoginScreen()),
           (route) => false,
         );
       }
