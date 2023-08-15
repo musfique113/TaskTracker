@@ -40,6 +40,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   cached_network_image: ^3.2.3
   flutter_form_builder: ^9.1.0
+  get:
 
 dev_dependencies:
   flutter_test:
