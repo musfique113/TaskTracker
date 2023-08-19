@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager_ostad/data/models/auth_utility.dart';
-import 'package:taskmanager_ostad/data/models/login_model.dart';
-import 'package:taskmanager_ostad/data/models/network_response.dart';
-import 'package:taskmanager_ostad/data/services/network_caller.dart';
+import 'package:get/get.dart';
 import 'package:taskmanager_ostad/presentation/components/ui_components/form_validator.dart';
 import 'package:taskmanager_ostad/presentation/screens/auth/email_verification_screen.dart';
 import 'package:taskmanager_ostad/presentation/screens/auth/sign_up_screen.dart';
+import 'package:taskmanager_ostad/presentation/screens/bottom_nav_bar_screen.dart';
+import 'package:taskmanager_ostad/presentation/state_managers/login_controller.dart';
 import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
-import '../../../../data/utils/urls.dart';
-import '../bottom_nav_bar_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,42 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
-
   bool _passwordVisible = false;
-  bool _signInProgress = false;
 
-  Future<void> logIn() async {
-    _signInProgress = true;
-    setState(() {});
-
-    Map<String, dynamic> requestBody = {
-      "email": _emailTEController.text.trim(),
-      "password": _passwordTEController.text,
-    };
-
-    final NetworkResponse response =
-        await NetworkCaller().postRequest(Urls.login, requestBody);
-    _signInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
-
-    if (response.isSuccess) {
-      LoginModel model = LoginModel.fromJson(response.body!);
-      await AuthUtility.saveUserInfo(model);
-      if (mounted) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const BottomNavbarScreen()),
-            (route) => false);
-      }
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Incorrect email or password')));
-      }
-    }
-  }
+  //final SignInController  siginInController = Get.put<SignInController> (SignInController());
 
   @override
   Widget build(BuildContext context) {
@@ -113,21 +77,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Visibility(
-                      visible: _signInProgress == false,
-                      replacement: const Center(child: CircularProgressIndicator()),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
-                            logIn();
-                          },
-                          child: const Icon(Icons.arrow_forward_ios)),
-                    ),
-                  ),
+                  GetBuilder<SignInController>(builder: (SignInController) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Visibility(
+                        visible: SignInController.signInProgress == false,
+                        replacement:
+                            const Center(child: CircularProgressIndicator()),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              SignInController.logIn(
+                                      _emailTEController.text.trim(),
+                                      _passwordTEController.text)
+                                  .then((result) {
+                                if (result == true) {
+                                  Get.offAll(BottomNavbarScreen());
+                                } else {
+                                  Get.snackbar("Failed", "Login Failed");
+                                }
+                              });
+                            },
+                            child: const Icon(Icons.arrow_forward_ios)),
+                      ),
+                    );
+                  }),
                   const SizedBox(
                     height: 25,
                   ),
@@ -160,7 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SignUpScreen()));
+                                    builder: (context) =>
+                                        const SignUpScreen()));
                           },
                           child: const Text("Sign Up"))
                     ],

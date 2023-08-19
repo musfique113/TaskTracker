@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager_ostad/presentation/components/theme_data/dark_theme.dart';
 import 'package:taskmanager_ostad/presentation/screens/splash_screen.dart';
+import 'package:taskmanager_ostad/presentation/state_managers/controller_binding.dart';
 import 'presentation/components/theme_data/light_theme.dart';
 
 class TaskManagerApp extends StatefulWidget {
@@ -24,6 +25,7 @@ class _TaskManagerAppState extends State<TaskManagerApp> {
       darkTheme: AppDarkTheme.darkTheme,
       themeMode: ThemeMode.light,
       home: const SplashScreen(),
+      initialBinding: ControllerBinding(),
     );
   }
 }
