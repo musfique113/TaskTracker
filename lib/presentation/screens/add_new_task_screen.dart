@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager_ostad/data/models/network_response.dart';
-import 'package:taskmanager_ostad/data/models/task_list_model.dart';
-import 'package:taskmanager_ostad/data/services/network_caller.dart';
-import 'package:taskmanager_ostad/data/utils/urls.dart';
 import 'package:taskmanager_ostad/presentation/screens/bottom_nav_bar_screen.dart';
+import 'package:taskmanager_ostad/presentation/state_managers/add_new_task_controller.dart';
 import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
 import 'package:taskmanager_ostad/presentation/widgets/user_profile_banner.dart';
 
@@ -19,38 +16,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final TextEditingController _titleTEController = TextEditingController();
   final TextEditingController _descriptionTEController =
       TextEditingController();
-  bool _adNewTaskInProgress = false;
 
-  Future<void> addNewTask() async {
-    _adNewTaskInProgress = true;
-    if (mounted) {
-      setState(() {});
-    }
-    Map<String, dynamic> requestBody = {
-      "title": _titleTEController.text.trim(),
-      "description": _descriptionTEController.text.trim(),
-      "status": "New"
-    };
-    final NetworkResponse response =
-        await NetworkCaller().postRequest(Urls.createTask, requestBody);
-    _adNewTaskInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
-    if (response.isSuccess) {
-      _titleTEController.clear();
-      _descriptionTEController.clear();
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Task added successfully')));
-      }
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Task add failed!')));
-      }
-    }
-  }
+  // final AddNewTaskController _addNewTaskController =
+  //     Get.find<AddNewTaskController>();
 
   @override
   Widget build(BuildContext context) {
@@ -92,31 +60,59 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                   const SizedBox(
                     height: 16,
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Visibility(
-                      visible: _adNewTaskInProgress == false,
-                      replacement: const Center(
-                        child: CircularProgressIndicator(),
+                  GetBuilder<AddNewTaskController>(builder: (addNewTaskController) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Visibility(
+                        visible:
+                            addNewTaskController.adNewTaskInProgress == false,
+                        replacement: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              addNewTaskController
+                                  .addNewTask(
+                                _titleTEController.text,
+                                _descriptionTEController.text,
+                              )
+                                  .then((value) {
+                                if (value) {
+                                  _titleTEController.clear();
+                                  _descriptionTEController.clear();
+                                  Get.snackbar(
+                                    'Success',
+                                    'Task added successfully!',
+                                    backgroundColor: Colors.green,
+                                    colorText: Colors.white,
+                                    borderRadius: 10,
+                                  );
+                                } else {
+                                  Get.snackbar(
+                                    'Failed',
+                                    'Task add failed!',
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white,
+                                    borderRadius: 10,
+                                  );
+                                }
+                              });
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text('Task added successfully')));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Task added failed')));
+                              }
+                              Get.off(const BottomNavbarScreen());
+                            },
+                            child: const Icon(Icons.arrow_forward_ios)),
                       ),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            addNewTask();
-                            if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content:
-                                          Text('Task added successfully')));
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Task added failed')));
-                            }
-                            Get.off(const BottomNavbarScreen());
-                          },
-                          child: const Icon(Icons.arrow_forward_ios)),
-                    ),
-                  ),
+                    );
+                  }),
                 ],
               ),
             ),
@@ -125,5 +121,4 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
       ),
     );
   }
-
 }

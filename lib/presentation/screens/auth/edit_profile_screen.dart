@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taskmanager_ostad/data/models/auth_utility.dart';
 import 'package:taskmanager_ostad/data/models/login_model.dart';
-import 'package:taskmanager_ostad/data/models/network_response.dart';
-import 'package:taskmanager_ostad/data/services/network_caller.dart';
-import 'package:taskmanager_ostad/data/utils/urls.dart';
 import 'package:taskmanager_ostad/presentation/components/ui_components/form_validator.dart';
+import 'package:taskmanager_ostad/presentation/state_managers/edit_profile_controller.dart';
 import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
 import 'package:taskmanager_ostad/presentation/widgets/user_profile_banner.dart';
 
@@ -17,6 +16,9 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  final EditProfileController _editProfileController =
+      Get.find<EditProfileController>();
+
   UserData userData = AuthUtility.userInfo.data!;
   bool _passwordVisible = false;
   final TextEditingController _emailTEController = TextEditingController();
@@ -28,7 +30,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   XFile? imageFile;
   ImagePicker picker = ImagePicker();
-  bool _profileInProgress = false;
 
   @override
   void initState() {
@@ -37,45 +38,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _firstNameTEController.text = userData.firstName ?? '';
     _lastNameTEController.text = userData.lastName ?? '';
     _mobileTEController.text = userData.mobile ?? '';
-  }
-
-  Future<void> updateProfile() async {
-    _profileInProgress = true;
-    if (mounted) {
-      setState(() {});
-    }
-    final Map<String, dynamic> requestBody = {
-      "firstName": _firstNameTEController.text.trim(),
-      "lastName": _lastNameTEController.text.trim(),
-      "mobile": _mobileTEController.text.trim(),
-      "photo": ""
-    };
-    if (_passwordTEController.text.isNotEmpty) {
-      requestBody['password'] = _passwordTEController.text;
-    }
-
-    final NetworkResponse response =
-        await NetworkCaller().postRequest(Urls.updateProfile, requestBody);
-    _profileInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
-    if (response.isSuccess) {
-      userData.firstName = _firstNameTEController.text.trim();
-      userData.lastName = _lastNameTEController.text.trim();
-      userData.mobile = _mobileTEController.text.trim();
-      AuthUtility.updateUserInfo(userData);
-      _passwordTEController.clear();
-      if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Profile updated!')));
-      }
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Profile update failed! Try again.')));
-      }
-    }
   }
 
   @override
@@ -212,23 +174,51 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       const SizedBox(
                         height: 16,
                       ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: Visibility(
-                          visible: _profileInProgress == false,
-                          replacement:
-                              const Center(child: CircularProgressIndicator()),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (!_formKey.currentState!.validate()) {
-                                return;
-                              }
-                              updateProfile();
-                            },
-                            child: const Text('Update'),
+                      GetBuilder<EditProfileController>(builder: (_) {
+                        return SizedBox(
+                          width: double.infinity,
+                          child: Visibility(
+                            visible: _editProfileController.profileInProgress ==
+                                false,
+                            replacement: const Center(
+                                child: CircularProgressIndicator()),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (!_formKey.currentState!.validate()) {
+                                  return;
+                                }
+                                _editProfileController
+                                    .updateProfile(
+                                        _firstNameTEController.text.trim(),
+                                        _lastNameTEController.text.trim(),
+                                        _mobileTEController.text.trim(),
+                                        _passwordTEController.text)
+                                    .then((value) {
+                                  if (value) {
+                                    _passwordTEController.clear();
+                                    Get.snackbar(
+                                      'Success',
+                                      'Profile updated!',
+                                      backgroundColor: Colors.green,
+                                      colorText: Colors.white,
+                                      borderRadius: 10,
+                                    );
+                                  } else {
+                                    Get.snackbar(
+                                      'Failed',
+                                      'Profile update failed! Try again.',
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
+                                      borderRadius: 10,
+                                    );
+                                  }
+                                });
+                              },
+                              child: const Text('Update'),
+                            ),
                           ),
-                        ),
-                      )
+                        );
+                      })
                     ],
                   ),
                 ),
