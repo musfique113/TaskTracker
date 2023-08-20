@@ -7,11 +7,12 @@ import 'package:taskmanager_ostad/data/utils/urls.dart';
 
 class SummaryCountController extends GetxController {
   bool _getCountSummaryInProgress = false;
-  SummaryCountModel _summaryCountModel = SummaryCountModel();
+
   String message = '';
 
   bool get getCountSummaryInProgress => _getCountSummaryInProgress;
 
+  SummaryCountModel _summaryCountModel = SummaryCountModel();
   SummaryCountModel get summaryCountModel => _summaryCountModel;
 
   Future<bool> getCountSummary() async {

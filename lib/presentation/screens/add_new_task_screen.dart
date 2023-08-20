@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
@@ -111,13 +112,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                   const SnackBar(
                                       content: Text('Task added failed')));
                             }
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const BottomNavbarScreen()),
-                                (route) => false);
-                            //Navigator.pushReplacementNamed(context, NewTaskScreen());
+                            Get.off(const BottomNavbarScreen());
                           },
                           child: const Icon(Icons.arrow_forward_ios)),
                     ),
@@ -131,5 +126,4 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     );
   }
 
-  void showEditBottomSheet(TaskData task) {}
 }
