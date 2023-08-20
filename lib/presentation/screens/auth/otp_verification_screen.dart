@@ -3,7 +3,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
 import 'package:taskmanager_ostad/data/utils/urls.dart';
-import 'package:taskmanager_ostad/presentation/screens/auth/set_password_screen.dart';
+import 'package:taskmanager_ostad/presentation/screens/auth/reset_password_screen.dart';
 import 'package:taskmanager_ostad/presentation/screens/auth/sign_in_screen.dart';
 import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
 

@@ -18,6 +18,8 @@ class ResetPasswordScreen extends StatefulWidget {
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   bool _passwordVisible = false;
+  bool _confirmPasswordVisible = false;
+
   final TextEditingController _passwordTEController = TextEditingController();
   final TextEditingController _confirmPasswordTEController =
       TextEditingController();
@@ -119,12 +121,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           decoration: InputDecoration(
                             hintText: "Re-type Password",
                             suffixIcon: IconButton(
-                              icon: _passwordVisible
+                              icon: _confirmPasswordVisible
                                   ? const Icon(Icons.visibility)
                                   : const Icon(Icons.visibility_off),
                               onPressed: () {
                                 setState(() {
-                                  _passwordVisible = !_passwordVisible;
+                                  _confirmPasswordVisible =
+                                  !_confirmPasswordVisible;
                                 });
                               },
                             ),
@@ -143,6 +146,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              if(_passwordTEController.text != _confirmPasswordTEController.text){
+                                SnackBar snackBar = SnackBar(
+                                  content: Text(
+                                    'Passwords do not match!',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 return;
                               }
                               resetPassword();
