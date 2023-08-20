@@ -4,6 +4,7 @@ import 'package:taskmanager_ostad/presentation/state_managers/delete_task_contro
 import 'package:taskmanager_ostad/presentation/state_managers/edit_profile_controller.dart';
 import 'package:taskmanager_ostad/presentation/state_managers/login_controller.dart';
 import 'package:taskmanager_ostad/presentation/state_managers/new_task_controller.dart';
+import 'package:taskmanager_ostad/presentation/state_managers/otp_verfication_controller.dart';
 import 'package:taskmanager_ostad/presentation/state_managers/reset_password_controller.dart';
 import 'package:taskmanager_ostad/presentation/state_managers/signup_controller.dart';
 import 'package:taskmanager_ostad/presentation/state_managers/summary_count_controller.dart';
@@ -19,5 +20,6 @@ class ControllerBinding extends Bindings {
     Get.put<DeleteTaskController>(DeleteTaskController());
     Get.put<AddNewTaskController>(AddNewTaskController());
     Get.put<EditProfileController>(EditProfileController());
+    Get.put<OtpVerificationController>(OtpVerificationController());
   }
 }

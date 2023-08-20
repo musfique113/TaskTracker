@@ -114,15 +114,27 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               child: CircularProgressIndicator(),
                             ),
                             child: ElevatedButton(
+
                               onPressed: () {
                                 if (!_formKey.currentState!.validate()) {
                                   return;
                                 }
+                                if (_passwordTEController.text != _confirmPasswordTEController.text) {
+                                  Get.snackbar(
+                                    'Error',
+                                    'Passwords do not match!',
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white,
+                                    borderRadius: 10,
+                                  );
+                                  return;
+                                }
+
                                 ResetPasswordController.resetPassword(
-                                        widget.email,
-                                        widget.otp,
-                                        _passwordTEController.text)
-                                    .then((value) {
+                                  widget.email,
+                                  widget.otp,
+                                  _passwordTEController.text,
+                                ).then((value) {
                                   if (value) {
                                     Get.snackbar(
                                       'Success',

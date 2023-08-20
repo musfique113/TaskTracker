@@ -1,98 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:taskmanager_ostad/data/models/network_response.dart';
-import 'package:taskmanager_ostad/data/services/network_caller.dart';
-import 'package:taskmanager_ostad/data/utils/urls.dart';
 import 'package:taskmanager_ostad/presentation/screens/auth/retset_password_screen.dart';
 import 'package:taskmanager_ostad/presentation/screens/auth/sign_in_screen.dart';
+import 'package:taskmanager_ostad/presentation/state_managers/otp_verfication_controller.dart';
 import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
 
-class OtpVerificationScreen extends StatefulWidget {
+class OtpVerificationScreen extends StatelessWidget {
   final String email;
 
-  const OtpVerificationScreen({Key? key, required this.email})
+
+   OtpVerificationScreen({Key? key, required this.email})
       : super(key: key);
 
-  @override
-  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
-}
-
-class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final TextEditingController _otpTEController = TextEditingController();
-  bool _otpVerificationInProgress = false;
 
-  Future<void> verifyOTP() async {
-    _otpVerificationInProgress = true;
-    if (mounted) {
-      setState(() {});
-    }
-    final NetworkResponse response = await NetworkCaller()
-        .getRequest(Urls.otpVerify(widget.email, _otpTEController.text));
-    _otpVerificationInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
-    if (response.isSuccess) {
-      if (mounted) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ResetPasswordScreen(
-                      email: widget.email,
-                      otp: _otpTEController.text,
-                    )));
-      }
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Otp verification has been failed!')));
-      }
-    }
-  }
 
-//   Future<void> verifyOTP() async {
-//   _otpVerificationInProgress = true;
-//   if (mounted) {
-//     setState(() {});
-//   }
-//
-//   final enteredOTP = _otpTEController.text;
-//   final NetworkResponse response = await NetworkCaller()
-//       .getRequest(Urls.otpVerify(widget.email, enteredOTP));
-//
-//   _otpVerificationInProgress = false;
-//   if (mounted) {
-//     setState(() {});
-//   }
-//
-//   if (response.isSuccess) {
-//     if (enteredOTP == response.statusCode) {
-//       if (mounted) {
-//         Navigator.push(
-//           context,
-//           MaterialPageRoute(
-//             builder: (context) => ResetPasswordScreen(
-//               email: widget.email,
-//               otp: enteredOTP,
-//             ),
-//           ),
-//         );
-//       }
-//     } else {
-//       if (mounted) {
-//         ScaffoldMessenger.of(context).showSnackBar(
-//           const SnackBar(content: Text('Incorrect OTP!')),
-//         );
-//       }
-//     }
-//   } else {
-//     if (mounted) {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         const SnackBar(content: Text('OTP verification has failed!')),
-//       );
-//     }
-//   }
-// }
 
   @override
   Widget build(BuildContext context) {
@@ -149,43 +72,55 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         backgroundColor: Colors.white,
                         cursorColor: Colors.green,
                         enableActiveFill: true,
-                        //errorAnimationController: errorController,
-                        // //controller: textEditingController,
-                        // onCompleted: (v) {
-                        //   print("Completed");
-                        // },
-                        // onChanged: (value) {
-                        //   print(value);
-                        //   // setState(() {
-                        //   //   currentText = value;
-                        //   // });
-                        // },
-                        // beforeTextPaste: (text) {
-                        //   print("Allowing to paste $text");
-                        //   //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                        //   //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                        //   return true;
-                        // },
                         appContext: context,
                       ),
                     ),
                     const SizedBox(
                       height: 16,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Visibility(
-                        visible: _otpVerificationInProgress == false,
-                        replacement: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            verifyOTP();
-                          },
-                          child: const Text('Verify'),
-                        ),
-                      ),
+                    GetBuilder<OtpVerificationController>(
+                      builder: (OtpVerificationController) {
+                        return SizedBox(
+                          width: double.infinity,
+                          child: Visibility(
+                            visible: OtpVerificationController.otpVerificationInProgress == false,
+                            replacement: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                OtpVerificationController.verifyOTP(
+                                  email,
+                                  _otpTEController.text,
+                                ).then((value) {
+                                  if (value) {
+                                    Get.snackbar(
+                                      'Success',
+                                      'Otp verification success!',
+                                      backgroundColor: Colors.green,
+                                      colorText: Colors.white,
+                                      borderRadius: 10,
+                                    );
+                                    Get.to(() => ResetPasswordScreen(
+                                      email: email,
+                                      otp: _otpTEController.text,
+                                    ));
+                                  } else {
+                                    Get.snackbar(
+                                      'Failed',
+                                      'Otp verification has been failed!',
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
+                                      borderRadius: 10,
+                                    );
+                                  }
+                                });
+                              },
+                              child: const Text('Verify'),
+                            ),
+                          ),
+                        );
+                      }
                     ),
                     const SizedBox(
                       height: 16,
@@ -200,12 +135,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         ),
                         TextButton(
                             onPressed: () {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoginScreen()),
-                                  (route) => false);
+                              Get.off(const LoginScreen());
                             },
                             child: const Text('Sign in')),
                       ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:taskmanager_ostad/data/models/network_response.dart';
 import 'package:taskmanager_ostad/data/models/task_list_model.dart';
 import 'package:taskmanager_ostad/data/services/network_caller.dart';
@@ -41,7 +42,7 @@ class _UpdateTaskStatusSheetState extends State<UpdateTaskStatusSheet> {
     if (response.isSuccess) {
       widget.onUpdate();
       if (mounted) {
-        Navigator.pop(context);
+        Get.back();
       }
     } else {
       if (mounted) {
