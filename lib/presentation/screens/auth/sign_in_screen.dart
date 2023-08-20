@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       _passwordTEController.text)
                                   .then((result) {
                                 if (result == true) {
-                                  Get.offAll(BottomNavbarScreen());
+                                  Get.offAll(const BottomNavbarScreen());
                                 } else {
                                   Get.snackbar("Failed", "Login Failed");
                                 }
@@ -110,11 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const EmailVerificationScreen()));
+                          Get.to(const EmailVerificationScreen());
                         },
                         child: const Text(
                           "Forgot Password",
@@ -133,11 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const SignUpScreen()));
+                            Get.to(const SignUpScreen());
                           },
                           child: const Text("Sign Up"))
                     ],
