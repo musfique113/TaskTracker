@@ -1,12 +1,12 @@
 <h1 align="center">
-  <img src="https://github.com/musfique113/TaskTracker/assets/53111065/9957c873-4ff1-41d9-8c81-9092d35a5b17" width="200" height="200">
+  <img src="https://github.com/musfique113/TaskTracker/assets/53111065/9957c873-4ff1-41d9-8c81-9092d35a5b17" width="200" height="200"> 
+
 </h1>
 
 [![wakatime](https://wakatime.com/badge/user/18368562-fe00-4dd1-a78f-9403210fea47/project/6d3fa3b2-1a51-4c1f-83e1-7c73eee65218.svg)](https://wakatime.com/@musfique113/projects/pkjhzyzunl?start=2023-08-02&end=2023-08-08)
 # TaskTracker App
 
-TaskTracker is a Flutter app that utilizes a REST API to provide users with task tracking functionalities. The app allows users to create an account, log in, edit their profile, recover a forgotten password using email and OTP verification, and features a clean and intuitive UI for managing task states such as new progress, canceled and completed.
-
+TaskTracker is a Flutter app that utilizes a REST API to provide users with task tracking functionalities. I have utilized the GetX library for state management, which offers a reactive and efficient approach to managing the app's state. The app allows users to create an account, log in, edit their profile, recover a forgotten password using email and OTP verification. It features a clean and intuitive UI for managing task states, such as marking tasks as new, in progress, canceled, and completed. The use of GetX for state management enhances the overall user experience by ensuring smooth and real-time updates to the task states and other app features.
 ## Features
 
 - User Account Management: Create an account and log in.
@@ -64,6 +64,18 @@ The Task Manager REST API allows users to manage tasks, user profiles, and accou
 * token: An authentication token used for authorization in requests.
 
 ---
+
+## GetX StateManagement 
+
+<h1 align="center">
+<img width="354" height="200"  alt="KakaoTalk_Photo_2021-05-12-11-18-13" src="https://github.com/musfique113/TaskTracker/assets/53111065/bc51aba3-b76c-436b-8bbe-3d03ae7b9643">
+</h1>
+
+---
+
+- **State Management:** The app uses GetX for efficient and reactive state management.
+- **Navigation:** GetX's navigation system is implemented for smooth and seamless transitions between screens.
+- **SnackBars:** GetX SnackBars are used to display non-intrusive notifications to the user.
 
 ## Clone the repository:
 ```git clone https://github.com/your-username/TaskTracker.git```
