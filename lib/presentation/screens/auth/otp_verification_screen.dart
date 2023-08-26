@@ -9,13 +9,9 @@ import 'package:taskmanager_ostad/presentation/widgets/screen_background.dart';
 class OtpVerificationScreen extends StatelessWidget {
   final String email;
 
-
-   OtpVerificationScreen({Key? key, required this.email})
-      : super(key: key);
+  OtpVerificationScreen({Key? key, required this.email}) : super(key: key);
 
   final TextEditingController _otpTEController = TextEditingController();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -79,49 +75,50 @@ class OtpVerificationScreen extends StatelessWidget {
                       height: 16,
                     ),
                     GetBuilder<OtpVerificationController>(
-                      builder: (OtpVerificationController) {
-                        return SizedBox(
-                          width: double.infinity,
-                          child: Visibility(
-                            visible: OtpVerificationController.otpVerificationInProgress == false,
-                            replacement: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                OtpVerificationController.verifyOTP(
-                                  email,
-                                  _otpTEController.text,
-                                ).then((value) {
-                                  if (value) {
-                                    Get.snackbar(
-                                      'Success',
-                                      'Otp verification success!',
-                                      backgroundColor: Colors.green,
-                                      colorText: Colors.white,
-                                      borderRadius: 10,
-                                    );
-                                    Get.to(() => ResetPasswordScreen(
-                                      email: email,
-                                      otp: _otpTEController.text,
-                                    ));
-                                  } else {
-                                    Get.snackbar(
-                                      'Failed',
-                                      'Otp verification has been failed!',
-                                      backgroundColor: Colors.red,
-                                      colorText: Colors.white,
-                                      borderRadius: 10,
-                                    );
-                                  }
-                                });
-                              },
-                              child: const Text('Verify'),
-                            ),
+                        builder: (OtpVerificationController) {
+                      return SizedBox(
+                        width: double.infinity,
+                        child: Visibility(
+                          visible: OtpVerificationController
+                                  .otpVerificationInProgress ==
+                              false,
+                          replacement: const Center(
+                            child: CircularProgressIndicator(),
                           ),
-                        );
-                      }
-                    ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              OtpVerificationController.verifyOTP(
+                                email,
+                                _otpTEController.text,
+                              ).then((value) {
+                                if (value) {
+                                  Get.snackbar(
+                                    'Success',
+                                    'Otp verification success!',
+                                    backgroundColor: Colors.green,
+                                    colorText: Colors.white,
+                                    borderRadius: 10,
+                                  );
+                                  Get.to(() => ResetPasswordScreen(
+                                        email: email,
+                                        otp: _otpTEController.text,
+                                      ));
+                                } else {
+                                  Get.snackbar(
+                                    'Failed',
+                                    'Otp verification has been failed!',
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white,
+                                    borderRadius: 10,
+                                  );
+                                }
+                              });
+                            },
+                            child: const Text('Verify'),
+                          ),
+                        ),
+                      );
+                    }),
                     const SizedBox(
                       height: 16,
                     ),
